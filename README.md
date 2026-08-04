@@ -1,31 +1,105 @@
 # AWS Certification Assistant
 
-## Project title and description
+## Project overview
 
-The **AWS Certification Assistant** is a machine learning project that combines a natural language classifier with a pre-trained language model.
+The **AWS Certification Assistant** is a machine learning project combining a natural language classifier with a pre-trained language model.
 
-The project will use machine-readable service data from [Botocore](https://github.com/boto/botocore) to build a dataset describing AWS services, operations, parameters and errors. A simple classifier will be trained to identify the AWS service most relevant to a user's question.
+It uses machine-readable service data from [Botocore](https://github.com/boto/botocore) to create a dataset describing AWS services and operations.
 
-The classifier will later be combined with a chatbot and retrieval-augmented generation (RAG). The aim is to help users understand AWS services, explore troubleshooting scenarios and support their AWS certification studies.
+The classifier will identify the AWS service most relevant to a user's question. It may later be combined with a chatbot and retrieval-augmented generation (RAG) to support AWS learning, troubleshooting and certification study.
 
-This project is currently in the planning and development stage. Its scope will be expanded as each part is implemented.
+The project is currently under development and will expand as new components are implemented.
+
+## Ingestion, transformation and export
+
+The current data pipeline:
+
+* loads AWS service models from Botocore;
+* extracts service and operation information;
+* saves the original records as a raw Parquet file;
+* cleans and standardises the records;
+* saves the cleaned records as a processed Parquet file.
+
+The ingestion code is contained in `src/ingest.py`.
+
+The transformation code in `src/transform.py`:
+
+* removes HTML from descriptions;
+* normalises whitespace;
+* standardises service identifiers;
+* checks that required fields are present;
+* removes duplicate operations.
+
+The export code in `src/export.py` saves the records using the Parquet format.
+
+`main.py` runs the complete pipeline.
+
+The generated files are:
+
+```text
+data/raw/operations.parquet
+data/processed/operations_clean.parquet
+```
+
+## Requirements and technologies
+
+The project uses:
+
+* Python;
+* Botocore for AWS service data;
+* PyArrow for Parquet files;
+* Beautiful Soup for cleaning HTML;
+* pytest for automated testing.
+
+The exact dependency versions are recorded in `requirements.txt`.
+
+Create and activate a virtual environment:
+
+```bash
+python -m venv .venv
+source .venv/bin/activate
+```
+
+Install the requirements:
+
+```bash
+python -m pip install -r requirements.txt
+```
+
+## Running the pipeline
+
+Run the pipeline from the project root:
+
+```bash
+python main.py
+```
+
+## Running the tests
+
+Run the test suite from the project root:
+
+```bash
+python -m pytest
+```
+
+The tests cover ingestion, transformation and Parquet export.
 
 ## Licensing
 
 Botocore is maintained and published by Amazon Web Services and is licensed under the [Apache License 2.0](https://github.com/boto/botocore/blob/develop/LICENSE.txt).
 
-The Apache License 2.0 permits the Botocore material to be used, modified and redistributed. Any Botocore material included or adapted by this project will retain the required licence and copyright notices, and any modifications will be identified.
+The Apache License 2.0 permits Botocore material to be used, modified and redistributed. Any Botocore material included or adapted by this project will retain the required licence and copyright notices.
 
-The licence for the original code in this project has not yet been selected. It will be documented separately in a `LICENSE` file.
+The licence for the original code in this project is documented separately in the repository's `LICENSE` file.
 
 This is an independent educational project and is not affiliated with or endorsed by Amazon Web Services.
 
-## Citations
+## Citation
 
 This project uses service data provided by Botocore:
 
-> Amazon Web Services. *Botocore: the low-level, core functionality of Boto3 and the AWS CLI.*  
-> https://github.com/boto/botocore  
+> Amazon Web Services. *Botocore: the low-level, core functionality of Boto3 and the AWS CLI.*
+> https://github.com/boto/botocore
 > Licensed under the Apache License, Version 2.0.
 
-The exact Botocore version used to generate the dataset will be added here once the ingestion process has been implemented.
+The exact Botocore version used to generate the dataset is recorded in `requirements.txt`.
