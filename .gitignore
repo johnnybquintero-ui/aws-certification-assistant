@@ -1,0 +1,9 @@
+# Python
+__pycache__/
+
+
+# Virtual environments
+.venv/
+
+# Test and tooling caches
+.pytest_cache/
