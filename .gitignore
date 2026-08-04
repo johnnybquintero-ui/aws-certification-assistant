@@ -1,9 +1,28 @@
-# Python
+# Python compiled files
 __pycache__/
-
+*.py[cod]
 
 # Virtual environments
 .venv/
+venv/
 
-# Test and tooling caches
+# Test and coverage caches
 .pytest_cache/
+.coverage
+htmlcov/
+
+# Type-checking and linting caches
+.mypy_cache/
+.ruff_cache/
+
+# Generated datasets
+data/raw/*.parquet
+data/processed/*.parquet
+
+# Editors and operating systems
+.vscode/
+.idea/
+.DS_Store
+
+#Misc
+NOTES.md
