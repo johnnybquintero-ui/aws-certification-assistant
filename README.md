@@ -79,7 +79,14 @@ data/processed/operations_clean.parquet
 
 ## Training the classifier
 
-The classifier uses TF-IDF vectorisation and Logistic Regression to predict an AWS service from an operation description.
+The classifier uses TF-IDF vectorisation and Logistic Regression to predict an AWS service from a natural-language requirement or operation description.
+
+Training uses two data sources:
+
+Processed Botocore operation descriptions.
+data/service_intents.csv, containing 504 curated synthetic intents across 21 AWS services.
+
+The intent examples supplement the formal Botocore language with shorter, user-style descriptions of AWS capabilities. They are balanced across the service classes and avoid including service names in the descriptions.
 
 Generate the processed dataset before training:
 
