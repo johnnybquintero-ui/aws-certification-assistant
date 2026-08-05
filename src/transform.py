@@ -73,6 +73,14 @@ def transform_operations(
             ),
         }
 
+        if not transformed_operation["description"]:
+            logger.warning(
+                "Removed operation with empty description: %s.%s",
+                transformed_operation["service"],
+                transformed_operation["operation"],
+            )
+            continue
+
         operation_key = (
             transformed_operation["service"],
             transformed_operation["operation"],
