@@ -10,37 +10,6 @@ The classifier will identify the AWS service most relevant to a user's question.
 
 The project is currently under development and will expand as new components are implemented.
 
-## Ingestion, transformation and export
-
-The current data pipeline:
-
-* loads AWS service models from Botocore;
-* extracts service and operation information;
-* saves the original records as a raw Parquet file;
-* cleans and standardises the records;
-* saves the cleaned records as a processed Parquet file.
-
-The ingestion code is contained in `src/ingest.py`.
-
-The transformation code in `src/transform.py`:
-
-* removes HTML from descriptions;
-* normalises whitespace;
-* standardises service identifiers;
-* checks that required fields are present;
-* removes duplicate operations.
-
-The export code in `src/export.py` saves the records using the Parquet format.
-
-`main.py` runs the complete pipeline.
-
-The generated files are:
-
-```text
-data/raw/operations.parquet
-data/processed/operations_clean.parquet
-```
-
 ## Requirements and technologies
 
 The project uses:
@@ -83,6 +52,69 @@ python -m pytest
 ```
 
 The tests cover ingestion, transformation and Parquet export.
+
+## Ingestion, transformation and export
+
+The current data pipeline:
+
+* loads AWS service models from Botocore;
+* extracts service and operation information;
+* saves the original records as a raw Parquet file;
+* cleans and standardises the records;
+* saves the cleaned records as a processed Parquet file.
+
+The ingestion code is contained in `src/ingest.py`.
+
+The transformation code in `src/transform.py`:
+
+* removes HTML from descriptions;
+* normalises whitespace;
+* standardises service identifiers;
+* checks that required fields are present;
+* removes duplicate operations.
+
+The export code in `src/export.py` saves the records using the Parquet format.
+
+`main.py` runs the complete pipeline.
+
+The generated files are:
+
+```text
+data/raw/operations.parquet
+data/processed/operations_clean.parquet
+```
+## Training the classifier
+
+The classifier uses TF-IDF vectorisation and Logistic Regression to predict an AWS service from an operation description.
+
+Generate the processed dataset before training:
+
+```bash
+python main.py
+```
+
+Train and evaluate the classifier:
+
+```bash
+python -m src.train_model
+```
+
+The training process uses a stratified 80/20 train-test split and evaluates accuracy, macro precision, macro recall and macro F1 score. It also logs a classification report and generates a normalised confusion matrix.
+
+The generated model files are:
+
+```text
+models/aws_service_classifier.pkl
+models/confusion_matrix.png
+```
+
+## Running the tests
+
+Run the test suite from the project root:
+
+```bash
+python -m pytest
+```
 
 ## Licensing
 
