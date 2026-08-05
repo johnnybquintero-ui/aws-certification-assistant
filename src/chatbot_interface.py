@@ -1,6 +1,7 @@
 from pathlib import Path
 
 from src.classifier import AWSServiceClassifier
+from src.language_model import LanguageModel
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 MODEL_PATH = PROJECT_ROOT / "models" / "aws_service_classifier.pkl"
@@ -9,31 +10,32 @@ EXIT_COMMANDS = {"exit", "quit"}
 
 
 class AWSChatbot:
-    def __init__(self, classifier: AWSServiceClassifier) -> None:
-        """Store the classifier used by the chatbot."""
+    def __init__(
+        self,
+        classifier: AWSServiceClassifier,
+        language_model: LanguageModel,
+    ) -> None:
+        """Store the classifier and language model used by the chatbot."""
 
         self.classifier = classifier
+        self.language_model = language_model
 
     def respond(self, user_input: str) -> str:
-        """Classify the user's original request."""
+        """Classify and respond to a user request."""
 
-        cleaned_input = " ".join(user_input.split())
+        if not user_input.strip():
+            raise ValueError("Please enter an AWS requirement.")
 
-        if not cleaned_input:
-            raise ValueError("Input must not be empty.")
+        predictions = self.classifier.classify_with_confidence(
+            user_input
+        )
 
-        predictions = self.classifier.classify_with_confidence(cleaned_input)
+        print(f"\n[DEBUG] Classifier input: {user_input}")
+        print(f"[DEBUG] Predictions: {predictions}")
 
-        if not predictions:
-            raise ValueError("The classifier returned no predictions.")
-
-        print(f"\n[DEBUG] Predictions: {predictions[:3]}")
-
-        top_service, confidence = predictions[0]
-
-        return (
-            f"The classifier suggests {top_service.upper()} "
-            f"with {confidence:.1%} confidence."
+        return self.language_model.generate_reply(
+            original_input=user_input,
+            predictions=predictions,
         )
 
 
@@ -60,10 +62,15 @@ def run_interface(chatbot: AWSChatbot) -> None:
 
 
 def main() -> None:
-    """Load the classifier and start the interface."""
+    """Load the models and start the interface."""
 
     classifier = AWSServiceClassifier(MODEL_PATH)
-    chatbot = AWSChatbot(classifier=classifier)
+    language_model = LanguageModel()
+
+    chatbot = AWSChatbot(
+        classifier=classifier,
+        language_model=language_model,
+    )
 
     run_interface(chatbot)
 

@@ -70,53 +70,31 @@ class LanguageModel:
             skip_special_tokens=True,
         ).strip()
 
-    def extract_requirement(self, user_input: str) -> str:
-        """Extract one concise technical requirement from the user's input."""
-
-        return self._generate(
-            system_prompt=(
-                "You are a text rewriter for an AWS classifier. "
-                "Rewrite the user's need as one short technical capability. "
-                "Do not answer the request. Do not name or recommend an AWS "
-                "service. Return one sentence only, without headings or bullets."
-            ),
-            user_prompt=user_input,
-            max_new_tokens=60,
-        )
-
     def generate_reply(
         self,
         original_input: str,
-        extracted_requirement: str,
         predictions: list[tuple[str, float]],
     ) -> str:
-        """Generate a response from the classifier's highest prediction."""
+        """Generate a friendly response from the classifier's prediction."""
 
         if not predictions:
             raise ValueError("The classifier returned no predictions.")
 
-        # The classifier returns predictions ordered by confidence.
         top_service, confidence = predictions[0]
         display_service = top_service.upper()
 
-        # TinyLlama explains the classifier's selection but does not replace it.
         explanation = self._generate(
             system_prompt=(
-                "You explain results produced by an AWS service classifier. "
-                "Write one short conversational sentence explaining why the "
-                "selected service might meet the requirement. Mention only the "
-                "selected service. Do not change the classifier's selection. "
-                "Do not use headings, bullet points or percentages. If the "
-                "confidence is below 50%, make it clear that the match is "
-                "uncertain."
+                "Explain why the selected AWS service matches the requirement. "
+                "Write exactly one complete sentence containing no more than "
+                "25 words. Mention only the selected service."
             ),
             user_prompt=(
                 f"Original request: {original_input}\n"
-                f"Extracted requirement: {extracted_requirement}\n"
                 f"Selected service: {display_service}\n"
                 f"Confidence: {confidence:.1%}"
             ),
-            max_new_tokens=60,
+            max_new_tokens=80,
         )
 
         # Build the factual classifier result in Python so TinyLlama cannot
