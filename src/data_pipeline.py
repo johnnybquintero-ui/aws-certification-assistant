@@ -9,7 +9,7 @@ from src.transform import transform_operations
 logger = logging.getLogger(__name__)
 
 
-PROJECT_ROOT = Path(__file__).resolve().parent
+PROJECT_ROOT = Path(__file__).resolve().parents[1]
 
 DEFAULT_RAW_OUTPUT_FILE = (
     PROJECT_ROOT
