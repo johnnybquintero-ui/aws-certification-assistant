@@ -15,23 +15,22 @@ from sklearn.metrics import (
     precision_score,
     recall_score,
     confusion_matrix,
-    ConfusionMatrixDisplay
+    ConfusionMatrixDisplay,
 )
 from sklearn.model_selection import train_test_split
 from sklearn.pipeline import Pipeline
 
 import matplotlib.pyplot as plt
 
+DEFAULT_DATA_SOURCE = Path("data/processed/operations_clean.parquet")
+# Introduce a higher weight for the intent examples to help the classifier
+DEFAULT_INTENTS_SOURCE = Path("data/service_intents.csv")
+DEFAULT_MODEL_OUTPUT = Path("models/aws_service_classifier.pkl")
 
-DEFAULT_DATA_SOURCE = Path(
-    "data/processed/operations_clean.parquet"
-)
-DEFAULT_MODEL_OUTPUT = Path(
-    "models/aws_service_classifier.pkl"
-)
+INTENT_WEIGHT = 3
 
-# Set a random number so that our results are the 
-# same every time we run our code. 
+# Set a random number so that our results are the
+# same every time we run our code.
 RANDOM_SEED = 42
 
 logger = logging.getLogger(__name__)
@@ -56,13 +55,21 @@ def parse_arguments() -> argparse.Namespace:
         help="Location for the saved trained model.",
     )
 
+    parser.add_argument(
+        "--intents-source",
+        type=Path,
+        default=DEFAULT_INTENTS_SOURCE,
+        help="Local path for the service-intent training dataset.",
+    )
+
     return parser.parse_args()
+
 
 def load_data(data_path: Path) -> pd.DataFrame:
     """Load the cleaned AWS operations dataset."""
 
     # Validate that the required columns are present in the dataset
-    # operation is unused in the model training, 
+    # operation is unused in the model training,
     # but we still want to keep it in the dataset for future reference.
     required_columns = {
         "service",
@@ -83,6 +90,48 @@ def load_data(data_path: Path) -> pd.DataFrame:
     )
 
     return dataframe
+
+
+def load_intent_data(intents_path: Path) -> pd.DataFrame:
+    """Load and validate the service-intent training dataset."""
+
+    required_columns = {
+        "service",
+        "description",
+    }
+
+    dataframe = pd.read_csv(intents_path)
+
+    missing_columns = required_columns - set(dataframe.columns)
+
+    if missing_columns:
+        raise ValueError(f"Missing intent columns: {sorted(missing_columns)}")
+
+    dataframe = dataframe[["service", "description"]].copy()
+
+    dataframe["service"] = dataframe["service"].str.strip()
+    dataframe["description"] = dataframe["description"].str.strip()
+
+    if dataframe[["service", "description"]].isna().any().any():
+        raise ValueError("Intent data contains missing values.")
+
+    empty_columns = (dataframe[["service", "description"]] == "").any()
+
+    if empty_columns.any():
+        raise ValueError(
+            "Intent data contains empty values in: "
+            f"{empty_columns[empty_columns].index.tolist()}"
+        )
+
+    logger.info(
+        "Loaded %d service intents across %d classes from %s",
+        len(dataframe),
+        dataframe["service"].nunique(),
+        intents_path,
+    )
+
+    return dataframe
+
 
 def prepare_training_data(
     dataframe: pd.DataFrame,
@@ -129,6 +178,7 @@ def split_data(
 
     return X_train, X_test, y_train, y_test
 
+
 def train_classifier(
     X_train: pd.Series,
     y_train: pd.Series,
@@ -139,13 +189,17 @@ def train_classifier(
         steps=[
             (
                 "vectoriser",
-                TfidfVectorizer(),
+                TfidfVectorizer(
+                    ngram_range=(1, 2),
+                    sublinear_tf=True,
+                ),
             ),
             (
                 "classifier",
                 LogisticRegression(
-                    max_iter=1000,
+                    max_iter=2000,
                     random_state=RANDOM_SEED,
+                    class_weight="balanced",
                 ),
             ),
         ]
@@ -162,6 +216,7 @@ def train_classifier(
     logger.info("Classifier training completed")
 
     return pipeline
+
 
 def evaluate_classifier(
     model: Pipeline,
@@ -251,6 +306,47 @@ def evaluate_classifier(
 
     return metrics
 
+
+def add_intents_to_training_data(
+    X_train: pd.Series,
+    y_train: pd.Series,
+    intents: pd.DataFrame,
+    weight: int = INTENT_WEIGHT,
+) -> tuple[pd.Series, pd.Series]:
+    """Add weighted user-style intents to the training samples."""
+
+    if weight < 1:
+        raise ValueError("Intent weight must be at least 1.")
+
+    weighted_intents = pd.concat(
+        [intents] * weight,
+        ignore_index=True,
+    )
+
+    combined_X_train = pd.concat(
+        [
+            X_train.reset_index(drop=True),
+            weighted_intents["description"],
+        ],
+        ignore_index=True,
+    )
+
+    combined_y_train = pd.concat(
+        [
+            y_train.reset_index(drop=True),
+            weighted_intents["service"],
+        ],
+        ignore_index=True,
+    )
+
+    logger.info(
+        "Added %d weighted intent samples to the training data",
+        len(weighted_intents),
+    )
+
+    return combined_X_train, combined_y_train
+
+
 def save_model(
     model: Pipeline,
     model_path: Path,
@@ -267,6 +363,7 @@ def save_model(
 
     logger.info("Saved trained model to %s", model_path)
 
+
 def main() -> None:
     """Run the complete model-training pipeline."""
 
@@ -275,16 +372,36 @@ def main() -> None:
 
     logger.info("Starting AWS service classifier training")
 
-    dataframe = load_data(args.data_source)
-    X, y = prepare_training_data(dataframe)
+    operations_dataframe = load_data(args.data_source)
+    intents_dataframe = load_intent_data(args.intents_source)
 
+    unknown_services = set(intents_dataframe["service"]) - set(
+        operations_dataframe["service"]
+    )
+
+    if unknown_services:
+        raise ValueError(
+            "Intent data contains unknown services: " f"{sorted(unknown_services)}"
+        )
+
+    X, y = prepare_training_data(operations_dataframe)
+
+    # Split the original Botocore data first.
     X_train, X_test, y_train, y_test = split_data(X, y)
+
+    # Add intents only to the training portion.
+    X_train, y_train = add_intents_to_training_data(
+        X_train,
+        y_train,
+        intents_dataframe,
+    )
 
     model = train_classifier(
         X_train,
         y_train,
     )
 
+    # Evaluation remains against unseen Botocore records.
     evaluate_classifier(
         model,
         X_test,
@@ -305,10 +422,7 @@ def main() -> None:
 if __name__ == "__main__":
     logging.basicConfig(
         level=logging.INFO,
-        format=(
-            "%(asctime)s | %(levelname)s | "
-            "%(name)s | %(message)s"
-        ),
+        format=("%(asctime)s | %(levelname)s | " "%(name)s | %(message)s"),
     )
 
     main()

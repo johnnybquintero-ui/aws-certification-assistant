@@ -4,7 +4,6 @@ import re
 
 from bs4 import BeautifulSoup
 
-
 logger = logging.getLogger(__name__)
 
 
@@ -59,18 +58,14 @@ def transform_operations(
         missing_columns = REQUIRED_COLUMNS - operation.keys()
 
         if missing_columns:
-            raise ValueError(
-                f"Missing required columns: {sorted(missing_columns)}"
-            )
+            raise ValueError(f"Missing required columns: {sorted(missing_columns)}")
 
         transformed_operation = {
             "service": operation["service"].strip().lower(),
             "service_name": operation["service_name"].strip(),
             "api_version": operation["api_version"].strip(),
             "operation": operation["operation"].strip(),
-            "description": clean_description(
-                operation["description"]
-            ),
+            "description": clean_description(operation["description"]),
         }
 
         if not transformed_operation["description"]:
@@ -94,9 +89,7 @@ def transform_operations(
             continue
 
         seen_operations.add(operation_key)
-        transformed_operations.append(
-            transformed_operation
-        )
+        transformed_operations.append(transformed_operation)
 
     logger.info(
         "Transformed %d records into %d cleaned records",

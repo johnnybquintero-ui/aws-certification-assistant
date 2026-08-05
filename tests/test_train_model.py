@@ -36,6 +36,7 @@ def test_load_data_returns_parquet_dataframe(tmp_path):
         expected_dataframe,
     )
 
+
 def test_load_data_raises_error_when_column_missing(
     tmp_path,
 ):
@@ -54,6 +55,7 @@ def test_load_data_raises_error_when_column_missing(
         match="Missing required columns.*description",
     ):
         load_data(data_path)
+
 
 def test_prepare_training_data_returns_features_and_labels():
     dataframe = pd.DataFrame(
@@ -79,6 +81,7 @@ def test_prepare_training_data_returns_features_and_labels():
         "lambda",
     ]
 
+
 def test_split_data_creates_reproducible_stratified_split():
     X = pd.Series(
         [
@@ -97,11 +100,7 @@ def test_split_data_creates_reproducible_stratified_split():
         ]
     )
 
-    y = pd.Series(
-        ["s3"] * 4
-        + ["lambda"] * 4
-        + ["rds"] * 4
-    )
+    y = pd.Series(["s3"] * 4 + ["lambda"] * 4 + ["rds"] * 4)
 
     first_split = split_data(X, y)
     second_split = split_data(X, y)
@@ -123,6 +122,7 @@ def test_split_data_creates_reproducible_stratified_split():
             first_result,
             second_result,
         )
+
 
 def test_train_classifier_returns_fitted_pipeline():
     X_train = pd.Series(
@@ -158,15 +158,11 @@ def test_train_classifier_returns_fitted_pipeline():
         )
     )
 
-    #The model returned is a scikit-learn Pipeline object.
+    # The model returned is a scikit-learn Pipeline object.
     assert isinstance(model, Pipeline)
 
-    check_is_fitted(
-        model.named_steps["vectoriser"]
-    )
-    check_is_fitted(
-        model.named_steps["classifier"]
-    )
+    check_is_fitted(model.named_steps["vectoriser"])
+    check_is_fitted(model.named_steps["classifier"])
 
     predictions = model.predict(
         pd.Series(
@@ -176,12 +172,11 @@ def test_train_classifier_returns_fitted_pipeline():
             ]
         )
     )
-    #One prediction was returned for each of the two input descriptions.
+    # One prediction was returned for each of the two input descriptions.
     assert len(predictions) == 2
-    #The predictions are valid service names from the training data.
-    assert set(predictions).issubset(
-        {"s3", "lambda"}
-    )
+    # The predictions are valid service names from the training data.
+    assert set(predictions).issubset({"s3", "lambda"})
+
 
 def test_evaluate_classifier_returns_expected_metrics():
     X_train = pd.Series(
@@ -241,6 +236,7 @@ def test_evaluate_classifier_returns_expected_metrics():
     assert metrics["precision"] == pytest.approx(1.0)
     assert metrics["recall"] == pytest.approx(1.0)
     assert metrics["f1_score"] == pytest.approx(1.0)
+
 
 def test_save_model_creates_output_file_and_correct_type(tmp_path):
     model = train_classifier(

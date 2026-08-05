@@ -5,24 +5,15 @@ from src.export import export_to_parquet
 from src.ingest import ingest_operations
 from src.transform import transform_operations
 
-
 logger = logging.getLogger(__name__)
 
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 
-DEFAULT_RAW_OUTPUT_FILE = (
-    PROJECT_ROOT
-    / "data"
-    / "raw"
-    / "operations.parquet"
-)
+DEFAULT_RAW_OUTPUT_FILE = PROJECT_ROOT / "data" / "raw" / "operations.parquet"
 
 DEFAULT_PROCESSED_OUTPUT_FILE = (
-    PROJECT_ROOT
-    / "data"
-    / "processed"
-    / "operations_clean.parquet"
+    PROJECT_ROOT / "data" / "processed" / "operations_clean.parquet"
 )
 
 
@@ -41,9 +32,7 @@ def run_pipeline(
         output_file=raw_output_file,
     )
 
-    cleaned_operations = transform_operations(
-        raw_operations
-    )
+    cleaned_operations = transform_operations(raw_operations)
 
     export_to_parquet(
         operations=cleaned_operations,
@@ -62,10 +51,7 @@ def run_pipeline(
 def main() -> None:
     logging.basicConfig(
         level=logging.INFO,
-        format=(
-            "%(asctime)s | %(levelname)s | "
-            "%(name)s | %(message)s"
-        ),
+        format=("%(asctime)s | %(levelname)s | " "%(name)s | %(message)s"),
     )
 
     run_pipeline()
