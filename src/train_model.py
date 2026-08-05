@@ -231,21 +231,22 @@ def evaluate_classifier(
         colorbar=False,
     )
 
-    axis.set_title(
-        "AWS Service Classifier Confusion Matrix"
+    axis.set_title("AWS Service Classifier Confusion Matrix")
+
+    confusion_matrix_path = Path("models/confusion_matrix.png")
+
+    confusion_matrix_path.parent.mkdir(
+        parents=True,
+        exist_ok=True,
     )
 
     figure.tight_layout()
-    figure.savefig(
-        "models/confusion_matrix.png",
-        dpi=200,
-    )
-
+    figure.savefig(confusion_matrix_path)
     plt.close(figure)
 
     logger.info(
-        "Saved confusion matrix visualisation to "
-        "models/confusion_matrix.png"
+        "Saved confusion matrix visualisation to %s",
+        confusion_matrix_path,
     )
 
     return metrics
