@@ -2,7 +2,7 @@
 
 ## Project overview
 
-The **AWS Certification Assistant** is a machine learning project combining a natural language classifier with a pre-trained language model.
+The **AWS Certification Assistant** is a machine learning project that currently uses a natural language classifier to identify AWS services.
 
 It uses machine-readable service data from [Botocore](https://github.com/boto/botocore) to create a dataset describing AWS services and operations.
 
@@ -19,6 +19,9 @@ The project uses:
 * PyArrow for Parquet files;
 * Beautiful Soup for cleaning HTML;
 * pytest for automated testing.
+* pandas for working with the processed dataset;
+* scikit-learn for classifier training and evaluation;
+* Matplotlib for confusion matrix visualisation;
 
 The exact dependency versions are recorded in `requirements.txt`.
 
@@ -35,14 +38,6 @@ Install the requirements:
 python -m pip install -r requirements.txt
 ```
 
-## Running the pipeline
-
-Run the pipeline from the project root:
-
-```bash
-python main.py
-```
-
 ## Running the tests
 
 Run the test suite from the project root:
@@ -50,8 +45,6 @@ Run the test suite from the project root:
 ```bash
 python -m pytest
 ```
-
-The tests cover ingestion, transformation and Parquet export.
 
 ## Ingestion, transformation and export
 
@@ -75,7 +68,7 @@ The transformation code in `src/transform.py`:
 
 The export code in `src/export.py` saves the records using the Parquet format.
 
-`main.py` runs the complete pipeline.
+`src/data_pipeline.py` runs the complete data prep pipeline.
 
 The generated files are:
 
@@ -83,6 +76,7 @@ The generated files are:
 data/raw/operations.parquet
 data/processed/operations_clean.parquet
 ```
+
 ## Training the classifier
 
 The classifier uses TF-IDF vectorisation and Logistic Regression to predict an AWS service from an operation description.
@@ -90,7 +84,7 @@ The classifier uses TF-IDF vectorisation and Logistic Regression to predict an A
 Generate the processed dataset before training:
 
 ```bash
-python main.py
+python -m src.data_pipeline
 ```
 
 Train and evaluate the classifier:
@@ -101,19 +95,11 @@ python -m src.train_model
 
 The training process uses a stratified 80/20 train-test split and evaluates accuracy, macro precision, macro recall and macro F1 score. It also logs a classification report and generates a normalised confusion matrix.
 
-The generated model files are:
+The trained pipeline is saved using pickle. The generated model files are:
 
 ```text
 models/aws_service_classifier.pkl
 models/confusion_matrix.png
-```
-
-## Running the tests
-
-Run the test suite from the project root:
-
-```bash
-python -m pytest
 ```
 
 ## Licensing
