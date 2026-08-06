@@ -1,0 +1,129 @@
+# CLF-C02 Domain 3: Cloud Technology and Services
+
+Exam weighting: 34% of scored content.
+
+## Overview
+
+Content Domain 3 covers Cloud Technology and Services and represents 34% of the scored content on the exam.
+
+## Task 3.1: Deploying and Operating in the AWS Cloud
+
+### Knowledge
+
+- Various ways of provisioning and operating in the AWS Cloud.
+- Various ways to access AWS services.
+- Types of cloud deployment models.
+
+### Skills
+
+- Deciding between access options such as APIs, SDKs, the AWS CLI, the AWS Management Console, and infrastructure as code (IaC).
+- Evaluating requirements to determine whether to use one-time operations or repeatable processes.
+- Identifying deployment models, including cloud, hybrid, and on-premises models.
+
+## Task 3.2: AWS Global Infrastructure
+
+### Knowledge
+
+- AWS Regions, Availability Zones, and edge locations.
+- High availability.
+- The use of multiple AWS Regions.
+- The benefits of edge locations.
+
+### Skills
+
+- Describing relationships among Regions, Availability Zones, and edge locations.
+- Describing how to achieve high availability by using multiple Availability Zones.
+- Recognizing that Availability Zones do not share single points of failure.
+- Describing when to use multiple Regions, including for disaster recovery, business continuity, low latency for end users, and data sovereignty.
+
+## Task 3.3: Compute Services
+
+### Knowledge
+
+- AWS compute services.
+
+### Skills
+
+- Recognizing the appropriate use of Amazon EC2 instance types, such as compute-optimized and storage-optimized instances.
+- Recognizing the appropriate use of container options, including Amazon Elastic Container Service (Amazon ECS) and Amazon Elastic Kubernetes Service (Amazon EKS).
+- Recognizing the appropriate use of serverless compute options, including AWS Fargate and AWS Lambda.
+- Recognizing that auto scaling provides elasticity.
+- Identifying the purposes of load balancers.
+
+## Task 3.4: Database Services
+
+### Knowledge
+
+- AWS database services.
+- Database migration.
+
+### Skills
+
+- Deciding when to use databases hosted on Amazon EC2 or AWS managed databases.
+- Identifying relational databases, including Amazon RDS and Amazon Aurora.
+- Identifying NoSQL databases, including Amazon DynamoDB.
+- Identifying in-memory databases, including Amazon ElastiCache.
+- Identifying database migration tools, including AWS Database Migration Service (AWS DMS) and AWS Schema Conversion Tool (AWS SCT).
+
+## Task 3.5: Network Services
+
+### Knowledge
+
+- AWS network services.
+
+### Skills
+
+- Identifying components of an Amazon VPC, including subnets and gateways.
+- Understanding security in a VPC, including network ACLs, security groups, and Amazon Inspector.
+- Understanding the purpose of Amazon Route 53.
+- Identifying network connectivity options to AWS, including AWS VPN and AWS Direct Connect.
+
+## Task 3.6: Storage Services
+
+### Knowledge
+
+- AWS storage services.
+
+### Skills
+
+- Identifying uses for object storage.
+- Recognizing differences among Amazon S3 storage classes.
+- Identifying block storage solutions, including Amazon Elastic Block Store (Amazon EBS) and instance store.
+- Identifying file services, including Amazon Elastic File System (Amazon EFS) and Amazon FSx.
+- Identifying cached file systems, including AWS Storage Gateway.
+- Understanding use cases for lifecycle policies.
+- Understanding use cases for AWS Backup.
+
+## Task 3.7: AI, Machine Learning, and Analytics Services
+
+### Knowledge
+
+- AWS artificial intelligence and machine learning (AI/ML) services.
+- AWS analytics services.
+
+### Skills
+
+- Understanding AI/ML services and the tasks that they accomplish, including Amazon SageMaker AI, Amazon Lex, and Amazon Kendra.
+- Identifying services for data analytics, including Amazon Athena, Amazon Kinesis, AWS Glue, and Amazon QuickSight.
+
+## Task 3.8: Other In-Scope AWS Service Categories
+
+### Knowledge
+
+- Application integration services, including Amazon EventBridge, Amazon Simple Notification Service (Amazon SNS), and Amazon Simple Queue Service (Amazon SQS).
+- Business application services, including Amazon Connect and Amazon Simple Email Service (Amazon SES).
+- Customer enablement services, including AWS Support.
+- Developer tools and capabilities, including AWS CodeBuild, AWS CodePipeline, and AWS X-Ray.
+- End-user computing services, including Amazon AppStream 2.0, Amazon WorkSpaces, and Amazon WorkSpaces Secure Browser.
+- Frontend web and mobile services, including AWS Amplify and AWS AppSync.
+- Internet of Things (IoT) services, including AWS IoT Core.
+
+### Skills
+
+- Choosing the appropriate service to deliver messages and send alerts and notifications.
+- Choosing the appropriate service to meet business application needs.
+- Choosing the appropriate option for business support assistance.
+- Identifying tools to develop, deploy, and troubleshoot applications.
+- Identifying services that can present the output of virtual machines (VMs) on end-user machines.
+- Identifying services that can create and deploy frontend and mobile services.
+- Identifying services that manage IoT devices.

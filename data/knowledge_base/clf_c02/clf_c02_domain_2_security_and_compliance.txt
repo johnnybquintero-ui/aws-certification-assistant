@@ -1,0 +1,70 @@
+# CLF-C02 Domain 2: Security and Compliance
+
+Exam weighting: 30% of scored content.
+
+## Overview
+
+Content Domain 2 covers Security and Compliance and represents 30% of the scored content on the exam.
+
+## Task 2.1: AWS Shared Responsibility Model
+
+### Knowledge
+
+- The AWS shared responsibility model.
+
+### Skills
+
+- Recognizing the components of the AWS shared responsibility model.
+- Describing the customer's responsibilities on AWS.
+- Describing AWS responsibilities.
+- Describing responsibilities that the customer and AWS share.
+- Describing how AWS responsibilities and customer responsibilities can shift depending on the service used, such as Amazon RDS, AWS Lambda, or Amazon EC2.
+
+## Task 2.2: Security, Governance, and Compliance
+
+### Knowledge
+
+- AWS compliance and governance concepts.
+- Benefits of cloud security, such as encryption.
+- Where to capture and locate logs associated with cloud security.
+
+### Skills
+
+- Identifying where to find AWS compliance information, such as AWS Artifact.
+- Understanding compliance needs across geographic locations or industries.
+- Describing how customers secure resources on AWS by using services such as Amazon Inspector, AWS Security Hub, Amazon GuardDuty, and AWS Shield.
+- Identifying encryption options, including encryption in transit and encryption at rest.
+- Recognizing services that aid governance and compliance, including monitoring with Amazon CloudWatch; auditing with AWS CloudTrail, AWS Audit Manager, and AWS Config; and reporting with access reports.
+- Recognizing compliance requirements that vary among AWS services.
+
+## Task 2.3: Access Management Capabilities
+
+### Knowledge
+
+- Identity and access management, including AWS Identity and Access Management (IAM).
+- The importance of protecting the AWS root user account.
+- The principle of least privilege.
+- AWS IAM Identity Center, formerly AWS Single Sign-On.
+
+### Skills
+
+- Understanding access keys, password policies, and credential storage by using services such as AWS Secrets Manager and AWS Systems Manager.
+- Identifying AWS authentication methods, including multi-factor authentication (MFA), IAM Identity Center, and cross-account IAM roles.
+- Defining groups, users, custom policies, and managed policies in accordance with the principle of least privilege.
+- Identifying tasks that only the account root user can perform.
+- Understanding methods that can protect the root user.
+- Understanding types of identity management, including federated identity management.
+
+## Task 2.4: Security Components and Resources
+
+### Knowledge
+
+- Security capabilities that AWS provides.
+- Security-related documentation that AWS provides.
+
+### Skills
+
+- Describing AWS security features and services, including AWS WAF, AWS Firewall Manager, AWS Shield, and Amazon GuardDuty.
+- Understanding that third-party security products are available from AWS Marketplace.
+- Identifying where AWS security information is available, including AWS Knowledge Center, AWS Security Center, and AWS Security Blog.
+- Understanding the use of AWS services for identifying security issues, including AWS Trusted Advisor.

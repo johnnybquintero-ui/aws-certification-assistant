@@ -1,0 +1,59 @@
+# CLF-C02 Domain 4: Billing, Pricing, and Support
+
+Exam weighting: 12% of scored content.
+
+## Overview
+
+Content Domain 4 covers Billing, Pricing, and Support and represents 12% of the scored content on the exam.
+
+## Task 4.1: AWS Pricing Models
+
+### Knowledge
+
+- Compute purchasing options, including On-Demand Instances, Reserved Instances, Spot Instances, AWS Savings Plans, Dedicated Hosts, Dedicated Instances, and Capacity Reservations.
+- Storage options and tiers.
+
+### Skills
+
+- Identifying when to use various compute purchasing options.
+- Describing Reserved Instance flexibility.
+- Describing Reserved Instance behavior in AWS Organizations.
+- Understanding incoming and outgoing data transfer costs, including transfers between AWS Regions and transfers within the same Region.
+- Understanding pricing options for different storage options and tiers.
+
+## Task 4.2: Billing, Budget, and Cost Management
+
+### Knowledge
+
+- Billing support and information.
+- Pricing information for AWS services.
+- AWS Organizations.
+- AWS cost allocation tags.
+
+### Skills
+
+- Understanding the appropriate uses and capabilities of AWS Budgets and AWS Cost Explorer.
+- Understanding the appropriate uses and capabilities of AWS Pricing Calculator.
+- Understanding consolidated billing and cost allocation in AWS Organizations.
+- Understanding types of cost allocation tags and their relationship to billing reports, including the AWS Cost and Usage Report.
+
+## Task 4.3: Technical Resources and AWS Support Options
+
+### Knowledge
+
+- Resources and documentation available on official AWS websites.
+- AWS Support plans.
+- The role of the AWS Partner Network, including independent software vendors and system integrators.
+- AWS Support Center.
+
+### Skills
+
+- Locating AWS whitepapers, blogs, and documentation on official AWS websites.
+- Identifying and locating AWS technical resources, including AWS Prescriptive Guidance, AWS Knowledge Center, and AWS re:Post.
+- Identifying AWS Support options, including customer service and communities, AWS Developer Support, AWS Business Support, AWS Enterprise On-Ramp Support, and AWS Enterprise Support.
+- Identifying the role of AWS Trusted Advisor, AWS Health Dashboard, and the AWS Health API in managing and monitoring environments for cost optimization.
+- Identifying the role of the AWS Trust and Safety team in reporting abuse of AWS resources.
+- Understanding the role of AWS Partners, including AWS Marketplace, independent software vendors, and system integrators.
+- Identifying the benefits of being an AWS Partner, including partner training and certification, partner events, and partner volume discounts.
+- Identifying key services offered through AWS Marketplace, including cost management, governance, and entitlement.
+- Identifying technical assistance options available from AWS, including AWS Professional Services and AWS Solutions Architects.

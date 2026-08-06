@@ -396,8 +396,7 @@ def main() -> None:
 
     if unknown_services:
         raise ValueError(
-            "Intent data contains unknown services: "
-            f"{sorted(unknown_services)}"
+            "Intent data contains unknown services: " f"{sorted(unknown_services)}"
         )
 
     # Split the Botocore operation descriptions.
@@ -454,9 +453,7 @@ def main() -> None:
     )
 
     if args.include_intents:
-        wafv2_training_examples = intent_X_train.loc[
-            intent_y_train == "wafv2"
-        ]
+        wafv2_training_examples = intent_X_train.loc[intent_y_train == "wafv2"]
 
         logger.debug(
             "WAF intent examples included in the training split:\n%s",
@@ -464,23 +461,19 @@ def main() -> None:
         )
 
     intent_matrix_title = (
-        "AWS Service Classifier — Intent Test Set "
-        f"({training_stage})"
+        "AWS Service Classifier — Intent Test Set " f"({training_stage})"
     )
 
     botocore_matrix_title = (
-        "AWS Service Classifier — Botocore Test Set "
-        f"({training_stage})"
+        "AWS Service Classifier — Botocore Test Set " f"({training_stage})"
     )
 
     intent_matrix_path = (
-        args.model_output.parent
-        / f"confusion_matrix_intents_{variant}.png"
+        args.model_output.parent / f"confusion_matrix_intents_{variant}.png"
     )
 
     botocore_matrix_path = (
-        args.model_output.parent
-        / f"confusion_matrix_botocore_{variant}.png"
+        args.model_output.parent / f"confusion_matrix_botocore_{variant}.png"
     )
 
     model = train_classifier(

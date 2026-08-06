@@ -1,0 +1,93 @@
+# CLF-C02 Exam Overview
+
+## Purpose of the Exam
+
+The AWS Certified Cloud Practitioner (CLF-C02) exam is intended for individuals who can effectively demonstrate overall knowledge of the AWS Cloud, independent of a specific job role.
+
+The exam validates a candidate's ability to:
+
+- Explain the value of the AWS Cloud.
+- Understand and explain the AWS shared responsibility model.
+- Understand the AWS Well-Architected Framework.
+- Understand security best practices.
+- Understand AWS Cloud costs, economics, and billing practices.
+- Describe and position the core AWS services, including compute, network, database, and storage services.
+- Identify AWS services for common use cases.
+
+## Recommended AWS Knowledge
+
+The target candidate should have AWS knowledge in the following areas:
+
+- AWS Cloud concepts.
+- Security and compliance in the AWS Cloud.
+- Core AWS services.
+- Economics of the AWS Cloud.
+
+## Exam Question Types
+
+Multiple choice: One correct response and three incorrect responses, known as distractors.
+
+Multiple response: Two or more correct responses from five or more response options.
+
+Candidates select one or more responses that best complete the statement or answer the question. Distractors are plausible but incorrect responses that a candidate with incomplete knowledge or skill might choose.
+
+Unanswered questions are scored as incorrect. There is no penalty for guessing.
+
+## Scored and Unscored Content
+
+The exam includes 50 questions that affect the candidate's score.
+
+The exam also includes 15 unscored questions that do not affect the candidate's score. AWS uses performance data from these questions to evaluate them for possible future use as scored questions. The unscored questions are not identified during the exam.
+
+## Exam Results and Scoring
+
+The AWS Certified Cloud Practitioner (CLF-C02) exam has a pass or fail designation. The exam is scored against a minimum standard established by AWS professionals who follow certification industry best practices and guidelines.
+
+Results are reported as a scaled score from 100 to 1,000. The minimum passing score is 700. Scaled scoring helps equate scores across exam forms that might have slightly different difficulty levels.
+
+The exam uses a compensatory scoring model. A candidate does not need to pass every content domain separately; the candidate needs to pass the exam overall.
+
+A score report can include section-level performance classifications. Because each content domain has a different weighting, some sections contain more scored content than others. Section-level feedback should be interpreted as a general indication of strengths and weaknesses.
+
+## Content Domains and Weightings
+
+- Content Domain 1: Cloud Concepts — 24% of scored content.
+- Content Domain 2: Security and Compliance — 30% of scored content.
+- Content Domain 3: Cloud Technology and Services — 34% of scored content.
+- Content Domain 4: Billing, Pricing, and Support — 12% of scored content.
+
+The exam guide's content outline includes domain weightings and task statements, but it is not a comprehensive list of everything that might appear on the exam.
+
+## Exam-Wide Technologies and Concepts
+
+The following technologies and concepts might appear on the exam. This list is non-exhaustive and is subject to change. The order and placement of items do not indicate their relative weight or importance on the exam.
+
+- APIs.
+- Benefits of migrating to the AWS Cloud.
+- AWS Cloud Adoption Framework (AWS CAF).
+- AWS Compliance.
+- Compute.
+- Cost management.
+- Databases.
+- Amazon EC2 instance types, including Reserved Instances, On-Demand Instances, and Spot Instances.
+- AWS global infrastructure, including AWS Regions and Availability Zones.
+- Infrastructure as code (IaC).
+- AWS Knowledge Center.
+- Machine learning.
+- Management and governance.
+- Migration and data transfer.
+- Network services.
+- AWS Partner Network (APN).
+- AWS Prescriptive Guidance.
+- AWS Pricing Calculator.
+- AWS Professional Services.
+- AWS re:Post.
+- AWS SDKs.
+- Security.
+- AWS Security Blog.
+- AWS shared responsibility model.
+- AWS Solutions Architects.
+- Storage.
+- AWS Support Center.
+- AWS Support plans.
+- AWS Well-Architected Framework.
