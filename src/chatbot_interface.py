@@ -78,73 +78,85 @@ class AWSChatbot:
 
             raise ValueError("Please enter an AWS requirement.")
 
-        # Identify whether the user is asking for one AWS service.
-        recommendation_request = is_service_recommendation(
-            user_input,
-        )
+        # Decide whether this input is asking for an AWS service
+        # recommendation or asking a general/exam question.
+        recommendation_request = is_service_recommendation(user_input)
 
-        # Use the existing classifier to predict the most relevant
-        # AWS services and their confidence scores.
-        predictions = self.classifier.classify_with_confidence(user_input)
+        # Exam questions do not use the service classifier, so they
+        # keep an empty predictions list.
+        predictions = []
 
-        # Embed the original user input and compare it with every
-        # document chunk stored in the vector store.
-        retrieved = retrieve_relevant_chunks(
-            query=user_input,
-            vector_store=self.vector_store,
-            embedding_model=self.embedding_model,
-            top_n=5,
-        )
+        # Assume that clarification is not required unless the
+        # classifier results prove otherwise.
+        clarification_required = False
 
-        # Convert the five retrieved chunks into one context string.
+        # Only service-recommendation requests should use the classifier.
+        if recommendation_request:
+            predictions = self.classifier.classify_with_confidence(user_input)
+
+            # These values can only be extracted when classifier
+            # predictions exist. This is why they belong inside
+            # the recommendation_request branch.
+            top_service, top_confidence = predictions[0]
+            second_service, second_confidence = predictions[1]
+
+            # Work out how far ahead the strongest prediction is.
+            confidence_margin = top_confidence - second_confidence
+
+            # Decide whether the classifier is confident enough to
+            # make a recommendation.
+            clarification_required = (
+                top_confidence < MINIMUM_CONFIDENCE
+                or confidence_margin < MINIMUM_MARGIN
+            )
+
+        # This is safe for both routes:
         #
-        # The underscore ignores the similarity score because the
-        # language model only needs the actual document text.
-        context = "\n".join(f"- {chunk}" for chunk, _ in retrieved)
-
-        # Record the classifier result in the debug logs.
+        # Service request: predictions contains classifier results.
+        # Exam question: predictions is an empty list.
         self.logger.debug(
             "Classifier input=%r | predictions=%r",
             user_input,
             predictions,
         )
 
-        # Log each retrieved chunk and its similarity score.
-        for chunk, score in retrieved:
-            self.logger.debug(
-                "Retrieved chunk=%r | similarity=%.3f",
-                chunk,
-                score,
-            )
-
-        # Extract the two strongest classifier predictions.
-        top_service, top_confidence = predictions[0]
-        second_service, second_confidence = predictions[1]
-
-        # Calculate how far ahead the top prediction is.
-        confidence_margin = top_confidence - second_confidence
-
-        # If the classifier is uncertain, ask the user for more detail.
-        #
-        # In this branch, the language model is not called, so the
-        # retrieved context is not used yet.
-        if recommendation_request and (
-            top_confidence < MINIMUM_CONFIDENCE or confidence_margin < MINIMUM_MARGIN
-        ):
+        # If a service request is too uncertain, ask for more detail.
+        # The RAG retriever and language model are not needed here.
+        if clarification_required:
             reply = (
-                f"I'm currently deciding between {top_service.upper()} and "
-                f"{second_service.upper()}, but I don't have enough confidence "
-                "to recommend one yet. Could you describe the workload or "
-                "resource involved and the specific outcome you need?"
+                f"I'm currently deciding between "
+                f"{top_service.upper()} and "
+                f"{second_service.upper()}, but I don't have enough "
+                "confidence to recommend one yet. Could you describe "
+                "the workload or resource involved and the specific "
+                "outcome you need?"
             )
 
             status = "clarification_required"
 
         else:
-            # Verify that the retrieved RAG context is about to be
-            # passed into the language model.
+            # Both confident service requests and exam questions use RAG.
+            retrieved = retrieve_relevant_chunks(
+                query=user_input,
+                vector_store=self.vector_store,
+                embedding_model=self.embedding_model,
+                top_n=5,
+            )
+
+            # Remove the similarity scores and combine the retrieved
+            # document chunks into one context string for the model.
+            context = "\n".join(f"- {chunk}" for chunk, _ in retrieved)
+
+            # Log each retrieved chunk and its similarity score.
+            for chunk, score in retrieved:
+                self.logger.debug(
+                    "Retrieved chunk=%r | similarity=%.3f",
+                    chunk,
+                    score,
+                )
+
             self.logger.info(
-                "RAG context passed to language model | chunks=%d | characters=%d",
+                "RAG context passed to language model | " "chunks=%d | characters=%d",
                 len(retrieved),
                 len(context),
             )
@@ -154,6 +166,13 @@ class AWSChatbot:
                 context[:500],
             )
 
+            # For an exam question:
+            #   predictions=[]
+            #   show_classifier=False
+            #
+            # For a service request:
+            #   predictions contains the ranked services
+            #   show_classifier=True
             reply = self.language_model.generate_reply(
                 original_input=user_input,
                 predictions=predictions,
@@ -163,9 +182,10 @@ class AWSChatbot:
 
             status = "completed"
 
-        # Record the final result.
+        # Record the final result for both completed responses
+        # and clarification responses.
         self.logger.info(
-            "status=%s | user_input=%r | predictions=%r | reply=%r",
+            "status=%s | user_input=%r | " "predictions=%r | reply=%r",
             status,
             user_input,
             predictions,

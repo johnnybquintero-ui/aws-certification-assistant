@@ -69,7 +69,7 @@ def test_extract_operations_contains_expected_keys(
     assert all(all(key in record for key in expected_keys) for record in result)
 
 
-def test_extract_operations_contains_correct_values(
+def test_extract_operations_maps_metadata_to_each_record(
     fake_service_model,
     fake_service_name,
 ):
@@ -90,7 +90,7 @@ def test_extract_operations_contains_correct_values(
         ].get("documentation", "")
 
 
-def test_extract_operations_contains_correct_values(
+def test_extract_operations_returns_expected_records(
     fake_service_model,
     fake_service_name,
 ):
