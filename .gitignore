@@ -27,6 +27,7 @@ data/processed/*.parquet
 #Misc
 NOTES.md
 logs/
+/debug_classifier.py
 
 # Generated model artifacts
 models/
