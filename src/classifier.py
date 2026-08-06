@@ -1,6 +1,7 @@
 import pickle
 from pathlib import Path
 
+
 class AWSServiceClassifier:
     def __init__(self, model_path: Path) -> None:
         with model_path.open("rb") as model_file:
@@ -23,7 +24,7 @@ class AWSServiceClassifier:
         self,
         text: str,
     ) -> list[tuple[str, float]]:
-        '''classify_with_confidence takes a string input and returns a list of tuples containing the predicted AWS service and its associated probability.'''
+        """classify_with_confidence takes a string input and returns a list of tuples containing the predicted AWS service and its associated probability."""
         cleaned_text = " ".join(text.split())
 
         if not cleaned_text:

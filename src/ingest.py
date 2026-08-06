@@ -2,7 +2,6 @@ import logging
 
 from botocore.loaders import create_loader
 
-
 logger = logging.getLogger(__name__)
 
 
@@ -10,38 +9,30 @@ SELECTED_SERVICES = [
     # Compute
     "ec2",
     "lambda",
-
     # Storage
     "s3",
     "efs",
-
     # Databases
     "rds",
     "dynamodb",
-
     # Networking
     "cloudfront",
-
     # Security
     "iam",
     "secretsmanager",
-
     # Monitoring and governance
     "cloudwatch",
     "logs",
     "cloudtrail",
     "config",
-
     # Application integration
     "sns",
     "events",
     "stepfunctions",
-
     # Containers
     "ecs",
     "eks",
     "ecr",
-
     # Analytics
     "athena",
     "glue",

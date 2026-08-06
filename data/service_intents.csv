@@ -1,0 +1,505 @@
+service,description
+ec2,run a long-lived application on configurable virtual servers
+ec2,provision virtual machines with a chosen operating system and instance size
+ec2,host software that requires administrator access to the underlying server
+ec2,scale a fleet of general-purpose compute instances as demand changes
+ec2,run a GPU-accelerated workload on a virtual machine
+ec2,launch compute instances from a reusable machine image
+ec2,attach persistent block storage to a virtual server
+ec2,operate a Windows server in the cloud
+ec2,I need full control over the operating system for my application server
+ec2,I want to lift and shift an existing server-based application
+ec2,I need an always-running process that is not limited to short function invocations
+ec2,I want to connect over SSH and install my own system packages
+ec2,I need virtual servers that can automatically scale behind a load balancer
+ec2,I want spare compute capacity at a discounted price for fault-tolerant jobs
+ec2,I need a dedicated physical host for server-bound software licences
+ec2,I want a predictable virtual machine for a self-managed database
+ec2,provide resizable compute capacity with selectable CPU and memory
+ec2,run a custom network appliance on a cloud instance
+ec2,create an autoscaling group of identical virtual servers
+ec2,reserve compute capacity for a workload that must launch when needed
+ec2,deploy a high-performance computing job across compute instances
+ec2,start and stop development servers without buying physical hardware
+ec2,configure instance networking and security groups for a server workload
+ec2,run software that needs a custom kernel or low-level operating system settings
+lambda,run code in response to an event without provisioning servers
+lambda,execute a small function whenever a new object is uploaded
+lambda,build a serverless backend function that scales automatically
+lambda,invoke application code from an HTTP API without running a web server
+lambda,process messages with short-lived event-driven functions
+lambda,run a scheduled piece of code without maintaining a host
+lambda,automatically execute code when a database stream receives a change
+lambda,pay only for the compute time used by individual function invocations
+lambda,I need code to run whenever a user submits a form
+lambda,I want to resize an image automatically after it is uploaded
+lambda,I need a lightweight webhook handler without an always-on server
+lambda,I want a function to consume queue messages and scale with the queue
+lambda,I need to validate incoming events with a short Python function
+lambda,I want to trigger code from changes in cloud resources
+lambda,I need bursty compute that can scale down when no events arrive
+lambda,I want to automate a brief maintenance action without managing infrastructure
+lambda,create an event source mapping that invokes code for new records
+lambda,deploy stateless functions with managed runtime patching and scaling
+lambda,run independent handlers for asynchronous application events
+lambda,process uploaded files with an event-triggered function
+lambda,execute backend logic using a managed language runtime
+lambda,configure reserved concurrency for a serverless function
+lambda,publish versioned functions and direct traffic through aliases
+lambda,run code from a container image as an on-demand function
+s3,store and retrieve large numbers of files as durable objects
+s3,keep unstructured data in buckets using unique object keys
+s3,provide scalable object storage without managing storage servers
+s3,store static website assets such as images style sheets and downloads
+s3,create a durable landing zone for a cloud data lake
+s3,retain multiple versions of uploaded objects
+s3,move older objects to lower-cost storage using lifecycle rules
+s3,replicate object data to another region for resilience
+s3,I need a place to upload and download millions of files
+s3,I want durable backup storage addressed through an API rather than a mounted drive
+s3,I need to archive infrequently accessed documents at a lower storage cost
+s3,I want users to upload objects through time-limited signed links
+s3,I need to store logs and analytical files in a central bucket
+s3,I want to protect objects from accidental deletion with versioning
+s3,I need encrypted object storage for application assets
+s3,I want to host downloadable media files without maintaining a file server
+s3,manage objects and their metadata inside named buckets
+s3,apply retention policies and legal holds to stored objects
+s3,copy objects automatically between buckets in different regions
+s3,store Parquet JSON and CSV files for later analytics
+s3,serve private objects through controlled API access
+s3,track object inventory and storage-class usage across buckets
+s3,receive events when objects are created or deleted in a bucket
+s3,store immutable backup copies with write-once-read-many controls
+efs,provide a shared file system that multiple Linux servers can mount
+efs,store files on elastic NFS storage that grows and shrinks automatically
+efs,give several compute instances concurrent access to the same directories
+efs,use POSIX file permissions on managed shared storage
+efs,mount the same regional file system from multiple availability zones
+efs,replace a self-managed network file server with elastic managed storage
+efs,share persistent files between container tasks
+efs,provide persistent home directories for a fleet of Linux hosts
+efs,I need multiple application servers to read and write the same files
+efs,I want a mounted drive with normal folders rather than object-storage APIs
+efs,I need an NFS file share without pre-provisioning storage capacity
+efs,I want legacy software to use a shared POSIX file system in the cloud
+efs,I need a common content directory for horizontally scaled web servers
+efs,I want file storage that automatically expands as users add files
+efs,I need shared training data mounted by several compute workers
+efs,I want persistent shared storage for serverless container workloads
+efs,create mount targets so clients can access a regional file system
+efs,use access points to give applications controlled paths into shared storage
+efs,support concurrent NFS reads and writes from many clients
+efs,apply Unix ownership and permission semantics to managed cloud files
+efs,move an on-premises NFS workload to fully elastic file storage
+efs,store application files that require file locking and hierarchical directories
+efs,share a common file namespace across compute instances
+efs,automatically transition infrequently accessed files to a cheaper storage class
+rds,run a managed relational database without handling routine administration
+rds,host a SQL database with automated backups and patching
+rds,create a managed PostgreSQL database instance
+rds,operate a transactional database with tables joins and foreign keys
+rds,deploy a relational database across availability zones for high availability
+rds,add read replicas to scale read-heavy relational queries
+rds,restore a managed database to a specific point in time
+rds,resize database compute and storage as an application grows
+rds,I need a managed MySQL database for a web application
+rds,I want ACID transactions and SQL without administering the database host
+rds,I need automatic database snapshots and recovery
+rds,I want a standby database in another availability zone for failover
+rds,I need an Oracle database engine managed in the cloud
+rds,I want to migrate a traditional relational application database
+rds,I need a SQL Server database with managed infrastructure
+rds,I want to connect using standard relational database drivers
+rds,provision a database instance running an industry-standard relational engine
+rds,manage database parameter groups and maintenance windows
+rds,encrypt a managed relational database and its backups
+rds,scale read traffic using replicated database instances
+rds,monitor a managed relational database while retaining SQL compatibility
+rds,perform point-in-time recovery from automated transaction log backups
+rds,use Multi-AZ deployment for managed relational database resilience
+rds,separate application compute from a managed SQL database endpoint
+dynamodb,store key-value and document data in a serverless NoSQL database
+dynamodb,retrieve application records quickly by partition key
+dynamodb,scale a low-latency database automatically for unpredictable traffic
+dynamodb,store flexible-schema items without relational joins
+dynamodb,build a high-volume session store using key-based access
+dynamodb,replicate a NoSQL table across regions for globally distributed access
+dynamodb,expire temporary records automatically using item time-to-live values
+dynamodb,capture a stream of item-level changes from a NoSQL table
+dynamodb,I need a shopping cart database that can handle sudden traffic spikes
+dynamodb,I want millisecond access to items using a primary key
+dynamodb,I need a serverless database for JSON-like documents
+dynamodb,I want a database table that does not require a fixed schema for every item
+dynamodb,I need to store user sessions without managing database servers
+dynamodb,I want to query records by partition key and sort key
+dynamodb,I need automatic scaling for a key-value workload
+dynamodb,I want a globally replicated table for users in several regions
+dynamodb,design a NoSQL table around partition and sort key access patterns
+dynamodb,perform conditional writes to prevent conflicting item updates
+dynamodb,create secondary indexes for alternate key-based query patterns
+dynamodb,process table changes from an ordered change stream
+dynamodb,use on-demand capacity for a workload with unpredictable request volume
+dynamodb,store idempotency keys with automatic expiration
+dynamodb,perform atomic counters and transactions across NoSQL items
+dynamodb,back up and restore a fully managed distributed NoSQL table
+cloudfront,cache web content at global edge locations to reduce latency
+cloudfront,deliver static and dynamic website content through a content delivery network
+cloudfront,serve images videos and JavaScript from locations close to users
+cloudfront,reduce traffic to an origin server by caching responses at the edge
+cloudfront,distribute content globally from an object-storage or HTTP origin
+cloudfront,use signed URLs to restrict access to private cached content
+cloudfront,invalidate cached files after publishing a new website version
+cloudfront,terminate HTTPS connections at a global content-delivery edge
+cloudfront,I need my website assets to load quickly for users around the world
+cloudfront,I want to cache downloads close to viewers instead of serving every request from the origin
+cloudfront,I need a global distribution in front of a storage bucket
+cloudfront,I want to stream media through edge locations with low latency
+cloudfront,I need a custom domain and certificate for globally cached content
+cloudfront,I want to keep an origin private while delivering selected content globally
+cloudfront,I need edge caching for both static files and dynamic HTTP responses
+cloudfront,I want to control cache behaviour by URL path
+cloudfront,route viewer requests to the lowest-latency edge location
+cloudfront,configure cache policies for headers cookies and query strings
+cloudfront,protect an origin from direct public access while using a distribution
+cloudfront,deliver different cached behaviours from multiple origins
+cloudfront,collect access logs for requests served by a global edge network
+cloudfront,use geographic restrictions for content delivered through edge locations
+cloudfront,compress web objects before delivering them to viewers
+cloudfront,run lightweight request or response logic at the content-delivery edge
+iam,control which identities can perform actions on cloud resources
+iam,grant least-privilege permissions using JSON access policies
+iam,create roles that applications can assume for temporary credentials
+iam,manage users groups roles and permissions for an account
+iam,allow one account to assume a role in another account
+iam,require conditions before authorizing access to a resource
+iam,set a permissions boundary that limits the maximum access a role can receive
+iam,use an instance role instead of storing credentials on a virtual server
+iam,I need to let developers read storage objects but not delete them
+iam,I want an application to obtain temporary credentials without embedded access keys
+iam,I need separate permissions for administrators auditors and developers
+iam,I want to deny access unless a request comes from an approved network
+iam,I need to delegate access across cloud accounts
+iam,I want to attach the same permission policy to a group of users
+iam,I need to review which actions a principal is allowed to perform
+iam,I want workload identities to assume roles rather than use long-lived keys
+iam,define identity-based and resource-based authorization policies
+iam,use policy conditions and tags for attribute-based access control
+iam,analyse policies to identify unintended external access
+iam,rotate and deactivate access keys assigned to a user identity
+iam,grant a service permission to call another service on my behalf
+iam,create a service-linked role with permissions scoped to its service
+iam,enforce a maximum permission set while teams create their own roles
+iam,test whether a policy allows a particular action on a resource
+secretsmanager,store database credentials outside application source code
+secretsmanager,retrieve API keys securely at application runtime
+secretsmanager,rotate a database password automatically on a schedule
+secretsmanager,manage OAuth tokens and application secrets through their lifecycle
+secretsmanager,encrypt secret values and control who can retrieve them
+secretsmanager,replace hard-coded credentials with calls to a managed secret store
+secretsmanager,replicate secrets to another region for regional applications
+secretsmanager,track versions of a secret while rotating credentials
+secretsmanager,I need somewhere secure to keep a third-party API token
+secretsmanager,I want my application to fetch its database password when it starts
+secretsmanager,I need to rotate credentials without redeploying every application client
+secretsmanager,I want to restrict secret retrieval to a specific application role
+secretsmanager,I need to store username and password pairs as encrypted secret values
+secretsmanager,I want automatic rotation for managed database credentials
+secretsmanager,I need to remove plaintext passwords from configuration files
+secretsmanager,I want to audit access to application secrets
+secretsmanager,manage secret versions with staging labels during credential rotation
+secretsmanager,cache retrieved secrets in an application while keeping a managed source of truth
+secretsmanager,share a secret across accounts using a resource policy
+secretsmanager,restore a secret during its scheduled deletion recovery window
+secretsmanager,rotate a non-database secret using custom function logic
+secretsmanager,retrieve only the current version of a protected credential
+secretsmanager,apply fine-grained access controls to encrypted application secrets
+secretsmanager,manage the lifecycle of API keys tokens and database passwords centrally
+cloudwatch,collect and graph performance metrics for cloud resources
+cloudwatch,create an alarm when a metric crosses a threshold
+cloudwatch,build a dashboard showing application and infrastructure health
+cloudwatch,publish custom business and application metrics for monitoring
+cloudwatch,automatically trigger an action when CPU utilisation remains high
+cloudwatch,monitor resources across regions from a shared operational dashboard
+cloudwatch,detect unusual metric behaviour using anomaly detection
+cloudwatch,combine several alarms into a single composite health signal
+cloudwatch,I need an alert when my server fleet runs out of capacity
+cloudwatch,I want a graph of request latency error rate and throughput
+cloudwatch,I need to monitor custom counters emitted by my application
+cloudwatch,I want an alarm to notify the team when a database metric breaches its limit
+cloudwatch,I need one dashboard for service-level indicators across several resources
+cloudwatch,I want to compare current performance metrics with previous periods
+cloudwatch,I need automatic actions when a monitored metric enters an alarm state
+cloudwatch,I want to track resource utilisation without building a monitoring platform
+cloudwatch,aggregate metric statistics over configurable time periods
+cloudwatch,configure metric math to calculate rates and service health indicators
+cloudwatch,monitor percentile latency for an application endpoint
+cloudwatch,create high-resolution metrics for rapidly changing workloads
+cloudwatch,display alarms and metric widgets in an operational dashboard
+cloudwatch,search and visualise metrics by resource tags
+cloudwatch,notify an autoscaling policy when a capacity metric changes
+cloudwatch,monitor the health and performance of AWS resources using managed metrics
+logs,collect application log events in central log groups and streams
+logs,search and analyse operational logs with an interactive query language
+logs,set different retention periods for groups of logs
+logs,stream logs from many servers into one managed destination
+logs,follow incoming log events in near real time during an incident
+logs,create a metric filter from matching patterns in log messages
+logs,subscribe a log group to another processing or delivery destination
+logs,encrypt retained application logs and restrict access to them
+logs,I need one place to search logs from all of my application instances
+logs,I want old log events to expire automatically after thirty days
+logs,I need to find exceptions across several log groups during an outage
+logs,I want to watch new log lines arrive while debugging production
+logs,I need to centralise function and container logs for troubleshooting
+logs,I want to extract fields and calculate statistics from structured log events
+logs,I need to forward selected log events to a downstream consumer
+logs,I want alerts derived from error patterns found in application logs
+logs,organise log streams that share retention and access-control settings
+logs,query JSON log fields to identify slow requests
+logs,export retained log data to object storage for long-term analysis
+logs,create cross-account observability for centrally managed logs
+logs,mask sensitive fields in log events before users view them
+logs,index selected log fields to reduce scanned data during queries
+logs,compare log volume across applications and environments
+logs,store and analyse service logs without operating a logging cluster
+cloudtrail,record AWS account activity and API calls for auditing
+cloudtrail,identify which identity changed a cloud resource and when
+cloudtrail,retain a history of management events across an account
+cloudtrail,investigate console sign-ins and command-line API activity
+cloudtrail,create an organisation-wide trail for governance and compliance
+cloudtrail,record data events for access to selected resources
+cloudtrail,query account activity in a managed audit event data store
+cloudtrail,detect unusual rates of write API calls with audit insights
+cloudtrail,I need to know who deleted a resource last Tuesday
+cloudtrail,I want an audit history of actions performed through the console SDKs and command line
+cloudtrail,I need evidence of account activity for a compliance review
+cloudtrail,I want to capture administrative API events in every region
+cloudtrail,I need to trace a security incident back to the principal and source IP
+cloudtrail,I want a central record of activity from multiple cloud accounts
+cloudtrail,I need to review recent management events without creating a custom logger
+cloudtrail,I want to audit access to sensitive object and function resources
+cloudtrail,deliver trail files containing account activity to durable storage
+cloudtrail,validate the integrity of delivered audit log files
+cloudtrail,create event selectors that control which resource activity is recorded
+cloudtrail,analyse API error codes and user agents from audit events
+cloudtrail,retain immutable evidence of cloud control-plane activity
+cloudtrail,look up resource creation modification and deletion events
+cloudtrail,record network activity events for supported service endpoints
+cloudtrail,capture user and API activity for security investigation and governance
+config,record how cloud resources are configured and how they change over time
+config,evaluate resource configurations against compliance rules
+config,view relationships between resources before making a change
+config,find resources whose settings do not meet an approved standard
+config,maintain an inventory of supported resources across accounts and regions
+config,apply a group of compliance rules as a conformance pack
+config,aggregate resource configuration and compliance results centrally
+config,review a timeline of configuration changes for a resource
+config,I need to see what a security group configuration looked like before it changed
+config,I want to flag storage buckets that do not meet encryption requirements
+config,I need an inventory of resources and their current configuration details
+config,I want to understand which resources depend on a component I plan to modify
+config,I need continuous checks against approved infrastructure settings
+config,I want to compare current resource settings with their previous state
+config,I need to report noncompliant resources across several accounts
+config,I want a historical configuration record even for changes not initiated by an API
+config,record configuration items for supported resource types
+config,run managed or custom rules when a resource configuration changes
+config,remediate noncompliant resource settings automatically
+config,query resource configuration properties across the account
+config,track configuration drift and resource relationships for governance
+config,deploy standard compliance controls across an organisation
+config,measure compliance status against desired configuration policies
+config,inspect the full change history of cloud infrastructure resources
+sns,publish a message to a topic and deliver it to multiple subscribers
+sns,fan out one application event to several queues and functions
+sns,send operational alerts to users by email or text message
+sns,decouple publishers from subscribers with asynchronous topic messaging
+sns,filter topic messages so each subscriber receives only relevant events
+sns,deliver notifications to HTTP endpoints mobile devices and email addresses
+sns,use a first-in-first-out topic for ordered deduplicated fanout
+sns,broadcast the same event to multiple independent processing systems
+sns,I need one message to trigger several downstream consumers
+sns,I want customers to receive a text notification when an order ships
+sns,I need to publish alerts to an email distribution list
+sns,I want multiple queues to receive their own copy of each event
+sns,I need publishers and subscribers to communicate without direct connections
+sns,I want to route topic messages using subscription filter policies
+sns,I need to push notifications to mobile application endpoints
+sns,I want a dead-letter queue for messages that cannot reach a subscriber
+sns,create a publish-subscribe topic for asynchronous notifications
+sns,subscribe functions queues and webhooks to the same message topic
+sns,encrypt topic messages and control who can publish or subscribe
+sns,deliver high-throughput event notifications to many endpoints
+sns,send a confirmation notification when a monitoring alarm fires
+sns,archive topic messages for replay to subscribers when required
+sns,publish cross-account notifications to an authorised topic
+sns,fan out application events without polling each consumer
+events,route application events from many sources to matching targets
+events,filter events using patterns on fields in an event payload
+events,connect loosely coupled services through a serverless event bus
+events,transform an event before delivering it to a target
+events,send software-as-a-service partner events into cloud applications
+events,connect one streaming source to one target with filtering and enrichment
+events,schedule a one-time or recurring invocation using cron or rate expressions
+events,archive events from a bus and replay them later
+events,I need to route order events to different consumers based on event type
+events,I want cloud service events delivered to a function when a rule matches
+events,I need a central event bus for applications owned by different teams
+events,I want to invoke a target every weekday at a specified time
+events,I need to integrate a third-party software event source with internal services
+events,I want to enrich records while moving them from one event source to one target
+events,I need to replay historical events after fixing a consumer
+events,I want event producers to remain unaware of the systems that consume their events
+events,create rules that select events and deliver them to one or more targets
+events,route events between buses in different accounts
+events,register and discover schemas for events flowing through an event bus
+events,apply input transformation before an event reaches its destination
+events,configure retries and a dead-letter destination for failed event delivery
+events,trigger a workflow in response to a matching resource event
+events,build point-to-point event integration with optional filtering and enrichment
+events,manage scheduled tasks centrally without operating a scheduler server
+stepfunctions,coordinate multiple application tasks using a state-machine workflow
+stepfunctions,run tasks in sequence and pass data between workflow states
+stepfunctions,branch a workflow according to the result of a previous step
+stepfunctions,retry failed tasks and catch errors without writing custom orchestration code
+stepfunctions,run independent workflow branches in parallel and wait for them to finish
+stepfunctions,pause a workflow for a fixed duration or until a callback arrives
+stepfunctions,orchestrate a distributed transaction across several services
+stepfunctions,process a large collection of items with a map state
+stepfunctions,I need to coordinate several functions as one reliable business process
+stepfunctions,I want a visual workflow with retries timeouts and error handling
+stepfunctions,I need to wait for human approval before the next automated step
+stepfunctions,I want a long-running order process that remembers its current state
+stepfunctions,I need parallel branches for independent processing tasks
+stepfunctions,I want to call service APIs directly from workflow steps
+stepfunctions,I need to inspect the execution history of an application workflow
+stepfunctions,I want to compensate for a failed step in a multi-stage process
+stepfunctions,define workflows as state machines with task choice wait and parallel states
+stepfunctions,coordinate extract transform and load jobs in a data pipeline
+stepfunctions,use callback tokens to pause until an external worker completes
+stepfunctions,apply retry and catch policies to individual workflow states
+stepfunctions,start nested workflows for reusable subprocesses
+stepfunctions,limit concurrency while mapping a workflow over many records
+stepfunctions,orchestrate microservices while retaining execution state and history
+stepfunctions,run high-volume short-duration workflow executions for event processing
+ecs,deploy manage and scale containerized applications with managed orchestration
+ecs,run a group of containers described by a task definition
+ecs,keep a desired number of container tasks running as a service
+ecs,run containers on serverless compute or on a managed instance fleet
+ecs,perform rolling deployments of an application packaged as containers
+ecs,place container tasks across availability zones for resilience
+ecs,run scheduled or one-off container tasks
+ecs,assign permissions directly to containers through task roles
+ecs,I need to run Docker containers without operating my own orchestrator
+ecs,I want a service to replace unhealthy container tasks automatically
+ecs,I need to deploy a container image behind a load balancer
+ecs,I want to choose between serverless container capacity and my own instances
+ecs,I need separate task definitions for my application and worker services
+ecs,I want to scale the number of running container tasks based on demand
+ecs,I need blue-green deployment for a containerized service
+ecs,I want application containers to discover and connect to each other
+ecs,define CPU memory networking and images for a container task
+ecs,create a cluster for AWS-native container scheduling
+ecs,use capacity providers to control where container tasks run
+ecs,deploy daemon tasks across each container host
+ecs,attach persistent or shared storage to managed container tasks
+ecs,collect health status and deployment events for a container service
+ecs,run batch-style work as isolated container tasks
+ecs,manage the lifecycle of containers without requiring Kubernetes APIs
+eks,run Kubernetes workloads using a managed control plane
+eks,create a managed cluster that works with kubectl and Kubernetes APIs
+eks,deploy applications using Kubernetes deployments services and pods
+eks,manage worker nodes for a Kubernetes cluster with managed node groups
+eks,install Helm charts on a cloud-managed Kubernetes cluster
+eks,run existing Kubernetes manifests without operating the control plane
+eks,use Kubernetes autoscaling and scheduling for container workloads
+eks,integrate Kubernetes service accounts with cloud identity roles
+eks,I need a managed Kubernetes platform for our container applications
+eks,I want to migrate an existing Kubernetes workload with minimal manifest changes
+eks,I need the cloud provider to maintain Kubernetes control-plane availability
+eks,I want to deploy operators and custom resource definitions in a managed cluster
+eks,I need Kubernetes namespaces and role-based access control for team isolation
+eks,I want managed add-ons for cluster networking DNS and proxies
+eks,I need to run pods on either nodes or serverless container capacity
+eks,I want to manage applications using standard Kubernetes tooling
+eks,provision a highly available Kubernetes API server across availability zones
+eks,upgrade the managed Kubernetes control plane to a supported version
+eks,use an automated mode to manage cluster compute networking and storage
+eks,attach cloud load balancers and persistent volumes to Kubernetes workloads
+eks,run hybrid Kubernetes nodes connected to a managed cloud control plane
+eks,apply Kubernetes network policies to pod traffic
+eks,monitor Kubernetes workloads by cluster namespace pod and node
+eks,operate a conformant Kubernetes cluster integrated with cloud services
+ecr,store and distribute Docker and OCI container images in managed repositories
+ecr,push and pull private container images through an authenticated registry
+ecr,scan container images for operating system and language package vulnerabilities
+ecr,expire old container images automatically using lifecycle policies
+ecr,replicate container repositories across regions or accounts
+ecr,prevent existing image tags from being overwritten
+ecr,host public container images that external users can pull
+ecr,cache images pulled from an upstream public registry
+ecr,I need a private registry for images built by our deployment pipeline
+ecr,I want container tasks to pull approved images from a managed repository
+ecr,I need to retain only the latest production image versions
+ecr,I want to copy container images closer to deployments in another region
+ecr,I need vulnerability findings for images before they are deployed
+ecr,I want to store multi-architecture container image manifests
+ecr,I need access policies that control who can push or pull repository images
+ecr,I want an immutable image tag for each software release
+ecr,manage private repositories for OCI images and compatible artifacts
+ecr,authenticate a Docker client to a cloud container registry
+ecr,sign container images and verify their provenance before deployment
+ecr,encrypt stored container image layers
+ecr,trigger an event when an image is pushed or a scan completes
+ecr,copy selected repositories automatically to another registry
+ecr,reduce external registry dependency using a pull-through cache
+ecr,provide a scalable highly available source for deployment container images
+athena,run interactive SQL queries directly against data in object storage
+athena,analyse CSV JSON or Parquet files without loading them into a database
+athena,perform ad hoc queries over a data lake using standard SQL
+athena,query partitioned datasets and pay for the data scanned
+athena,create a table from query results stored as columnar files
+athena,analyse service and access logs stored in buckets
+athena,separate query workloads and control costs using workgroups
+athena,query external data sources through federated connectors
+athena,I need to use SQL on files already stored in a bucket
+athena,I want analysts to query a data lake without managing query servers
+athena,I need a quick ad hoc query over Parquet event data
+athena,I want to join several catalogued datasets stored as files
+athena,I need to find patterns in historical audit logs using SQL
+athena,I want query results written back to object storage
+athena,I need to limit the amount of data each analytics query can scan
+athena,I want to query nested arrays and maps in JSON files
+athena,use a metadata catalog to discover table schemas for serverless SQL queries
+athena,create views and prepared statements for repeated analytical queries
+athena,query open table formats stored in a data lake
+athena,compress and convert data to a columnar layout with a create-table-as-select query
+athena,run SQL queries through JDBC or ODBC from a business intelligence tool
+athena,analyse application logs in place without building an ETL pipeline first
+athena,query data across object storage and supported external databases
+athena,execute serverless Apache Spark calculations in an interactive analytics session
+glue,extract transform and load data using managed serverless jobs
+glue,crawl data sources to discover schemas and create metadata tables
+glue,maintain a central data catalog for files and relational tables
+glue,prepare and move data between analytical sources and destinations
+glue,run scheduled data integration jobs without managing a cluster
+glue,convert raw data into cleaned columnar datasets for analytics
+glue,coordinate crawlers jobs and triggers in a data integration workflow
+glue,measure dataset quality using managed rules
+glue,I need to clean and transform raw CSV files before loading them into a warehouse
+glue,I want to discover table schemas automatically from files in a data lake
+glue,I need a shared metadata catalog for analytics engines
+glue,I want to join and reshape data from multiple sources using a serverless ETL job
+glue,I need to schedule a PySpark transformation without provisioning Spark servers
+glue,I want to bookmark processed data so an incremental job reads only new records
+glue,I need visual tools to build a data integration pipeline
+glue,I want to validate data quality before publishing a curated dataset
+glue,create and run extract transform and load scripts on managed infrastructure
+glue,register data locations schemas and partitions in a persistent metadata catalog
+glue,use crawlers to infer file formats and update catalog tables
+glue,stream and transform records from a real-time source into an analytical target
+glue,connect to databases and object stores through reusable data connections
+glue,find sensitive data patterns while preparing analytical datasets
+glue,manage reusable schemas for streaming data producers and consumers
+glue,author data preparation recipes for analysts without writing full ETL code

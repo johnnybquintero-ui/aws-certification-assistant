@@ -3,6 +3,7 @@ from pathlib import Path
 
 import pytest
 
+
 @pytest.fixture
 def fake_service_model():
     return {
@@ -20,9 +21,11 @@ def fake_service_model():
         },
     }
 
+
 @pytest.fixture
 def fake_service_name():
     return "example"
+
 
 @pytest.fixture
 def fake_operations(fake_service_model, fake_service_name):
@@ -36,6 +39,7 @@ def fake_operations(fake_service_model, fake_service_name):
         }
         for operation_name, operation_data in fake_service_model["operations"].items()
     ]
+
 
 class AlwaysS3Model:
     def predict(self, descriptions):
@@ -51,6 +55,7 @@ def fake_model_path(tmp_path: Path) -> Path:
 
     return model_path
 
+
 class FakeClassifier:
     def __init__(self):
         self.received_inputs = []
@@ -65,6 +70,7 @@ class FakeClassifier:
             ("glue", 0.15),
             ("rds", 0.05),
         ]
+
 
 @pytest.fixture
 def fake_classifier():

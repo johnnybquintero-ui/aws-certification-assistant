@@ -1,6 +1,7 @@
 from src.simple_interface import run_interface
 from tests.conftest import FakeClassifier
 
+
 def test_interface_displays_classification(monkeypatch, capsys):
     # Turn the test responses into an iterator.
     # Each call to next(responses) returns the next value:
@@ -38,9 +39,7 @@ def test_interface_displays_classification(monkeypatch, capsys):
 
     # Check that the interface sent the user's description
     # to the classifier.
-    assert classifier.received_inputs == [
-        "I need somewhere to store objects"
-    ]
+    assert classifier.received_inputs == ["I need somewhere to store objects"]
 
     # Check that the interface displayed the classifier's result.
     assert "[Result] s3" in output

@@ -79,7 +79,14 @@ data/processed/operations_clean.parquet
 
 ## Training the classifier
 
-The classifier uses TF-IDF vectorisation and Logistic Regression to predict an AWS service from an operation description.
+The classifier uses TF-IDF vectorisation and Logistic Regression to predict an AWS service from a natural-language requirement or operation description.
+
+Training uses two data sources:
+
+Processed Botocore operation descriptions.
+data/service_intents.csv, containing 504 curated synthetic intents across 21 AWS services.
+
+The intent examples supplement the formal Botocore language with shorter, user-style descriptions of AWS capabilities. They are balanced across the service classes and avoid including service names in the descriptions.
 
 Generate the processed dataset before training:
 
@@ -101,6 +108,51 @@ The trained pipeline is saved using pickle. The generated model files are:
 models/aws_service_classifier.pkl
 models/confusion_matrix.png
 ```
+
+### Natural-language intent data
+
+The Botocore dataset primarily contains formal AWS API documentation, which differs from the conversational questions expected from chatbot users. To reduce this gap, a curated intent dataset was added containing example requirements such as:
+
+```text
+I need a managed MySQL database for a web application. → rds
+I need somewhere to upload and download millions of files. → s3
+```
+
+The intent dataset is split into separate training and test sets. Only its training split is combined with the Botocore training data, preventing test examples from leaking into model training.
+
+Intent augmentation can be enabled with:
+
+```bash
+python -m src.train_model --include-intents
+```
+
+Both model variants are evaluated against the held-out Botocore and intent test sets. Adding intent data improved accuracy on conversational requests from **46.5% to 73.3%**, making the enhanced classifier more suitable for the natural-language interface.
+
+
+## Natural Language Interface
+
+The chatbot uses a **Classify Then Reply** architecture. Free-form user input is passed directly to the trained classifier, which predicts the most relevant AWS services. These predictions are then passed to a pretrained language model to produce a friendly response.
+
+```text
+User input → AWS service classifier → Language model response
+```
+
+This approach keeps service selection controlled by the classifier while using the language model only to explain the result conversationally.
+
+Ensure the trained model exists, then start the chatbot from the project root:
+
+```bash
+python -m src.chatbot_interface
+```
+
+Enter a description of an AWS requirement when prompted:
+
+```text
+I need a managed relational database.
+```
+
+Enter `exit` or `quit` to close the chatbot.
+
 
 ## Licensing
 

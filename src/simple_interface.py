@@ -3,7 +3,6 @@ from pathlib import Path
 
 from src.classifier import AWSServiceClassifier
 
-
 logger = logging.getLogger(__name__)
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
@@ -25,19 +24,14 @@ def run_interface(classifier: AWSServiceClassifier) -> None:
             break
 
         try:
-            predictions = classifier.classify_with_confidence(
-                user_input
-            )
+            predictions = classifier.classify_with_confidence(user_input)
         except ValueError as error:
             print(f"[Error] {error}")
             continue
 
         best_service, best_probability = predictions[0]
 
-        print(
-            f"[Result] {best_service} "
-            f"({best_probability:.1%} confidence)"
-        )
+        print(f"[Result] {best_service} " f"({best_probability:.1%} confidence)")
 
         print("[Other possibilities]")
 
@@ -51,8 +45,7 @@ def main() -> None:
     except FileNotFoundError:
         logger.error("Classifier model not found at %s", MODEL_PATH)
         print(
-            "[Error] Trained model not found. "
-            "Run 'python -m src.train_model' first."
+            "[Error] Trained model not found. " "Run 'python -m src.train_model' first."
         )
         return
 
