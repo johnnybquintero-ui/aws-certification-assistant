@@ -17,9 +17,14 @@ SELECTED_SERVICES = [
     "dynamodb",
     # Networking
     "cloudfront",
-    # Security
+   # Security
     "iam",
     "secretsmanager",
+    "wafv2",
+    "shield",
+    "guardduty",
+    "inspector2",
+    "securityhub",
     # Monitoring and governance
     "cloudwatch",
     "logs",

@@ -26,5 +26,7 @@ data/processed/*.parquet
 
 #Misc
 NOTES.md
+logs/
+
 # Generated model artifacts
 models/
