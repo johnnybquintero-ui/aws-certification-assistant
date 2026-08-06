@@ -178,7 +178,7 @@ def test_train_classifier_returns_fitted_pipeline():
     assert set(predictions).issubset({"s3", "lambda"})
 
 
-def test_evaluate_classifier_returns_expected_metrics():
+def test_evaluate_classifier_returns_expected_metrics(tmp_path):
     X_train = pd.Series(
         [
             "Upload an object to an S3 bucket",
@@ -217,10 +217,14 @@ def test_evaluate_classifier_returns_expected_metrics():
 
     model = train_classifier(X_train, y_train)
 
+    confusion_matrix_path = tmp_path / "test_confusion_matrix.png"
+
     metrics = evaluate_classifier(
         model,
         X_test,
         y_test,
+        confusion_matrix_path=confusion_matrix_path,
+        matrix_title="Test Confusion Matrix",
     )
 
     assert isinstance(metrics, dict)
@@ -236,6 +240,8 @@ def test_evaluate_classifier_returns_expected_metrics():
     assert metrics["precision"] == pytest.approx(1.0)
     assert metrics["recall"] == pytest.approx(1.0)
     assert metrics["f1_score"] == pytest.approx(1.0)
+
+    assert confusion_matrix_path.exists()
 
 
 def test_save_model_creates_output_file_and_correct_type(tmp_path):

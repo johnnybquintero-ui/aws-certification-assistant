@@ -94,7 +94,7 @@ class LanguageModel:
                 f"Selected service: {display_service}\n"
                 f"Confidence: {confidence:.1%}"
             ),
-            max_new_tokens=80,
+            max_new_tokens=150,
         )
 
         # Build the factual classifier result in Python so TinyLlama cannot

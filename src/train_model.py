@@ -62,6 +62,13 @@ def parse_arguments() -> argparse.Namespace:
         help="Local path for the service-intent training dataset.",
     )
 
+    parser.add_argument(
+        "--include-intents",
+        action=argparse.BooleanOptionalAction,
+        default=True,
+        help="Include service-intent examples in the training data.",
+    )
+
     return parser.parse_args()
 
 
@@ -222,6 +229,8 @@ def evaluate_classifier(
     model: Pipeline,
     X_test: pd.Series,
     y_test: pd.Series,
+    confusion_matrix_path: Path,
+    matrix_title: str,
 ) -> dict[str, float]:
     """Evaluate the classifier using unseen test data."""
 
@@ -286,9 +295,7 @@ def evaluate_classifier(
         colorbar=False,
     )
 
-    axis.set_title("AWS Service Classifier Confusion Matrix")
-
-    confusion_matrix_path = Path("models/confusion_matrix.png")
+    axis.set_title(matrix_title)
 
     confusion_matrix_path.parent.mkdir(
         parents=True,
@@ -310,23 +317,29 @@ def evaluate_classifier(
 def add_intents_to_training_data(
     X_train: pd.Series,
     y_train: pd.Series,
-    intents: pd.DataFrame,
+    intent_X_train: pd.Series,
+    intent_y_train: pd.Series,
     weight: int = INTENT_WEIGHT,
 ) -> tuple[pd.Series, pd.Series]:
-    """Add weighted user-style intents to the training samples."""
+    """Add weighted intent examples to the Botocore training data."""
 
     if weight < 1:
         raise ValueError("Intent weight must be at least 1.")
 
-    weighted_intents = pd.concat(
-        [intents] * weight,
+    weighted_intent_X = pd.concat(
+        [intent_X_train.reset_index(drop=True)] * weight,
+        ignore_index=True,
+    )
+
+    weighted_intent_y = pd.concat(
+        [intent_y_train.reset_index(drop=True)] * weight,
         ignore_index=True,
     )
 
     combined_X_train = pd.concat(
         [
             X_train.reset_index(drop=True),
-            weighted_intents["description"],
+            weighted_intent_X,
         ],
         ignore_index=True,
     )
@@ -334,14 +347,14 @@ def add_intents_to_training_data(
     combined_y_train = pd.concat(
         [
             y_train.reset_index(drop=True),
-            weighted_intents["service"],
+            weighted_intent_y,
         ],
         ignore_index=True,
     )
 
     logger.info(
         "Added %d weighted intent samples to the training data",
-        len(weighted_intents),
+        len(weighted_intent_X),
     )
 
     return combined_X_train, combined_y_train
@@ -372,6 +385,8 @@ def main() -> None:
 
     logger.info("Starting AWS service classifier training")
 
+    # Load both datasets. The intent data is needed as the shared test set
+    # even when intents are not included in training.
     operations_dataframe = load_data(args.data_source)
     intents_dataframe = load_intent_data(args.intents_source)
 
@@ -384,16 +399,68 @@ def main() -> None:
             "Intent data contains unknown services: " f"{sorted(unknown_services)}"
         )
 
+    # Split the Botocore operation descriptions.
     X, y = prepare_training_data(operations_dataframe)
 
-    # Split the original Botocore data first.
-    X_train, X_test, y_train, y_test = split_data(X, y)
-
-    # Add intents only to the training portion.
-    X_train, y_train = add_intents_to_training_data(
+    (
         X_train,
+        X_botocore_test,
         y_train,
-        intents_dataframe,
+        y_botocore_test,
+    ) = split_data(X, y)
+
+    # Separately split the user-style intent examples.
+    intent_X, intent_y = prepare_training_data(intents_dataframe)
+
+    (
+        intent_X_train,
+        intent_X_test,
+        intent_y_train,
+        intent_y_test,
+    ) = split_data(intent_X, intent_y)
+
+    logger.info(
+        "Reserved %d intent samples for evaluation",
+        len(intent_X_test),
+    )
+
+    if args.include_intents:
+        # Add only the intent training split.
+        X_train, y_train = add_intents_to_training_data(
+            X_train,
+            y_train,
+            intent_X_train,
+            intent_y_train,
+        )
+
+        variant = "post_intents"
+        training_stage = "Post-Intents Training"
+
+    else:
+        logger.info(
+            "Training without service-intent examples. "
+            "Held-out intents will still be used for evaluation."
+        )
+
+        variant = "pre_intents"
+        training_stage = "Pre-Intents Training"
+
+        training_stage = (
+            "Post-Intents Training" if args.include_intents else "Pre-Intents Training"
+        )
+
+    intent_matrix_title = f"AWS Service Classifier — Intent Test Set ({training_stage})"
+
+    botocore_matrix_title = (
+        f"AWS Service Classifier — Botocore Test Set ({training_stage})"
+    )
+
+    intent_matrix_path = (
+        args.model_output.parent / f"confusion_matrix_intents_{variant}.png"
+    )
+
+    botocore_matrix_path = (
+        args.model_output.parent / f"confusion_matrix_botocore_{variant}.png"
     )
 
     model = train_classifier(
@@ -401,11 +468,22 @@ def main() -> None:
         y_train,
     )
 
-    # Evaluation remains against unseen Botocore records.
+    # Evaluate performance on unseen user-style requests.
     evaluate_classifier(
         model,
-        X_test,
-        y_test,
+        intent_X_test,
+        intent_y_test,
+        confusion_matrix_path=intent_matrix_path,
+        matrix_title=intent_matrix_title,
+    )
+
+    # Evaluate performance on unseen Botocore documentation.
+    evaluate_classifier(
+        model,
+        X_botocore_test,
+        y_botocore_test,
+        confusion_matrix_path=botocore_matrix_path,
+        matrix_title=botocore_matrix_title,
     )
 
     save_model(

@@ -3,11 +3,17 @@ from pathlib import Path
 from src.classifier import AWSServiceClassifier
 from src.language_model import LanguageModel
 
+from transformers.utils import logging as transformers_logging
+
+transformers_logging.set_verbosity_error()
+transformers_logging.disable_progress_bar()
+
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 MODEL_PATH = PROJECT_ROOT / "models" / "aws_service_classifier.pkl"
 
 EXIT_COMMANDS = {"exit", "quit"}
 
+DEBUG = False
 
 class AWSChatbot:
     def __init__(
@@ -26,12 +32,11 @@ class AWSChatbot:
         if not user_input.strip():
             raise ValueError("Please enter an AWS requirement.")
 
-        predictions = self.classifier.classify_with_confidence(
-            user_input
-        )
+        predictions = self.classifier.classify_with_confidence(user_input)
 
-        print(f"\n[DEBUG] Classifier input: {user_input}")
-        print(f"[DEBUG] Predictions: {predictions}")
+        if DEBUG:
+            print(f"\n[DEBUG] Classifier input: {user_input}")
+            print(f"[DEBUG] Predictions: {predictions}")
 
         return self.language_model.generate_reply(
             original_input=user_input,
