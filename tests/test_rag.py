@@ -8,6 +8,7 @@ from src.rag import (
     chunk_text,
     create_vector_store,
     load_embedding_model,
+    retrieve_relevant_chunks,
 )
 
 
@@ -203,3 +204,38 @@ def test_load_embedding_model_uses_expected_model(
     mock_sentence_transformer.assert_called_once_with(EMBEDDING_MODEL_NAME)
 
     assert result is fake_model
+
+
+def test_retrieve_relevant_chunks_ranks_chunks_correctly():
+    """The chunk most similar to the query should rank first."""
+
+    mock_model = MagicMock()
+
+    # Pretend the query produces this embedding.
+    mock_model.encode.return_value = [1.0, 0.0]
+
+    vector_store = [
+        (
+            [1.0, 0.0],
+            "Amazon RDS provides managed relational databases.",
+        ),
+        (
+            [0.0, 1.0],
+            "Amazon S3 provides object storage.",
+        ),
+    ]
+
+    result = retrieve_relevant_chunks(
+        query="I need a managed relational database.",
+        vector_store=vector_store,
+        embedding_model=mock_model,
+        top_n=2,
+    )
+
+    assert result[0][0] == ("Amazon RDS provides managed relational databases.")
+    assert result[0][1] > result[1][1]
+
+    mock_model.encode.assert_called_once_with(
+        "I need a managed relational database.",
+        normalize_embeddings=True,
+    )

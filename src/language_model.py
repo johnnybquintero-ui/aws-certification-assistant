@@ -79,19 +79,20 @@ class LanguageModel:
     ) -> str:
         """Generate a response using classification and RAG context."""
 
-        if not predictions:
-            raise ValueError("The classifier returned no predictions.")
-
-        # The first prediction is the classifier's highest-scoring service.
-        top_service, top_confidence = predictions[0]
-        display_service = top_service.upper()
-
-        classification_output = "\n".join(
-            f"- {service.upper()}: {probability:.1%} confidence"
-            for service, probability in predictions
-        )
-
         if show_classifier:
+            # Service recommendations require classifier predictions.
+            if not predictions:
+                raise ValueError("Classifier predictions cannot be empty.")
+
+            # Only access predictions for service recommendations.
+            top_service, top_confidence = predictions[0]
+            display_service = top_service.upper()
+
+            classification_output = "\n".join(
+                f"- {service.upper()}: " f"{probability:.1%} confidence"
+                for service, probability in predictions
+            )
+
             response_instructions = f"""
             The user is requesting an AWS service recommendation.
 
@@ -108,7 +109,10 @@ class LanguageModel:
 
             {classification_output}
             """
+
         else:
+            # Exam questions intentionally have no classifier predictions.
+            # Therefore, predictions[0] must not be accessed on this route.
             response_instructions = """
             The user is asking a general AWS certification question.
 
@@ -153,7 +157,7 @@ class LanguageModel:
             max_new_tokens=250,
         )
 
-        # Python controls whether the classifier result is shown to the user.
+        # Display classifier information only for service recommendations.
         if show_classifier:
             return (
                 f"The classifier suggests {display_service} "
@@ -161,4 +165,5 @@ class LanguageModel:
                 f"{explanation.strip()}"
             )
 
+        # Exam answers return only the language model's explanation.
         return explanation.strip()
