@@ -1,7 +1,7 @@
 import torch
 from transformers import AutoModelForCausalLM, AutoTokenizer
 
-DEFAULT_MODEL_NAME = "TinyLlama/TinyLlama-1.1B-Chat-v1.0"
+DEFAULT_MODEL_NAME = "Qwen/Qwen3-4B-Instruct-2507"
 
 
 class LanguageModel:
@@ -74,32 +74,91 @@ class LanguageModel:
         self,
         original_input: str,
         predictions: list[tuple[str, float]],
+        context: str,
+        show_classifier: bool,
     ) -> str:
-        """Generate a friendly response from the classifier's prediction."""
+        """Generate a response using classification and RAG context."""
 
         if not predictions:
             raise ValueError("The classifier returned no predictions.")
 
-        top_service, confidence = predictions[0]
+        # The first prediction is the classifier's highest-scoring service.
+        top_service, top_confidence = predictions[0]
         display_service = top_service.upper()
 
-        explanation = self._generate(
-            system_prompt=(
-                "Explain why the selected AWS service matches the requirement. "
-                "Write exactly one complete sentence containing no more than "
-                "25 words. Mention only the selected service."
-            ),
-            user_prompt=(
-                f"Original request: {original_input}\n"
-                f"Selected service: {display_service}\n"
-                f"Confidence: {confidence:.1%}"
-            ),
-            max_new_tokens=150,
+        classification_output = "\n".join(
+            f"- {service.upper()}: {probability:.1%} confidence"
+            for service, probability in predictions
         )
 
-        # Build the factual classifier result in Python so TinyLlama cannot
-        # silently replace the selected service or confidence score.
-        return (
-            f"The classifier suggests {display_service} with "
-            f"{confidence:.1%} confidence. {explanation}"
+        if show_classifier:
+            response_instructions = f"""
+            The user is requesting an AWS service recommendation.
+
+            The classifier's top suggestion is {display_service}.
+            Explain why this service may suit the user's requirement, but only
+            when that explanation is supported by the supplied context.
+
+            Do not replace the classifier's top suggestion with another service.
+            If the context does not support the suggestion, state that the
+            available context is insufficient.
+
+            CLASSIFIER OUTPUT:
+            ==================
+
+            {classification_output}
+            """
+        else:
+            response_instructions = """
+            The user is asking a general AWS certification question.
+
+            Answer the user's question directly using the supplied context.
+            Do not mention the classifier or its predictions.
+            Do not turn the answer into a recommendation for one AWS service.
+            """
+
+        system_prompt = f"""
+        You are a helpful AWS certification assistant.
+
+        REQUEST INSTRUCTIONS:
+        =====================
+
+        {response_instructions}
+
+        GROUNDING RULES:
+        ================
+
+        - Answer using only information supported by the supplied context.
+        - Do not invent AWS services, features, facts, or exam content.
+        - Treat classifier predictions as suggestions, not factual evidence.
+        - Do not claim that an AWS service exists unless it is named in the context.
+        - If the context does not contain enough information, clearly state that
+        the available context is insufficient.
+        - Answer the user's exact question.
+        - Produce a complete answer and do not end mid-sentence.
+        - Reply in two to four short, friendly and informative sentences.
+
+        SUPPLIED CONTEXT:
+        =================
+
+        {context}
+
+        END OF CONTEXT
+        ==============
+        """
+
+        explanation = self._generate(
+            system_prompt=system_prompt,
+            user_prompt=original_input,
+            max_new_tokens=250,
         )
+
+        # Python controls whether the classifier result is shown to the user.
+        if show_classifier:
+            return (
+                f"The classifier suggests {display_service} "
+                f"with {top_confidence:.1%} confidence. "
+                f"{explanation.strip()}"
+            )
+
+        return explanation.strip()

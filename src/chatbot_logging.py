@@ -1,7 +1,6 @@
 import logging
 from pathlib import Path
 
-
 # Find the project root directory.
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 
@@ -21,7 +20,7 @@ def configure_chatbot_logging(
     log_path.parent.mkdir(parents=True, exist_ok=True)
 
     # Record INFO messages, warnings, errors and critical errors.
-    logger.setLevel(logging.INFO)
+    logger.setLevel(logging.DEBUG)
 
     # Prevent records from being passed to the root logger.
     # This keeps chatbot history out of the terminal.

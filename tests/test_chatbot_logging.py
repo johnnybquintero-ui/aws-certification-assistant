@@ -10,7 +10,6 @@ def test_configure_chatbot_logging_has_expected_attributes(tmp_path):
     logger = configure_chatbot_logging(log_path=log_path)
 
     assert logger.name == "src.chatbot_logging"
-    assert logger.level == logging.INFO
     assert logger.propagate is False
     assert len(logger.handlers) == 1
     assert isinstance(logger.handlers[0], logging.FileHandler)

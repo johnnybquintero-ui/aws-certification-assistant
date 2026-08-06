@@ -17,7 +17,7 @@ SELECTED_SERVICES = [
     "dynamodb",
     # Networking
     "cloudfront",
-   # Security
+    # Security
     "iam",
     "secretsmanager",
     "wafv2",
