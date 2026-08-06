@@ -153,6 +153,10 @@ I need a managed relational database.
 
 Enter `exit` or `quit` to close the chatbot.
 
+### Logging
+
+Chatbot interactions are automatically recorded for later review. Conversation history is saved to logs/chatbot_history.log and kept out of the terminal.
+
 
 ## Licensing
 

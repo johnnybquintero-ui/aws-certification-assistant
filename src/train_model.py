@@ -396,7 +396,8 @@ def main() -> None:
 
     if unknown_services:
         raise ValueError(
-            "Intent data contains unknown services: " f"{sorted(unknown_services)}"
+            "Intent data contains unknown services: "
+            f"{sorted(unknown_services)}"
         )
 
     # Split the Botocore operation descriptions.
@@ -425,7 +426,8 @@ def main() -> None:
     )
 
     if args.include_intents:
-        # Add only the intent training split.
+        # Add only the intent training split. The intent test split remains
+        # unseen and can therefore be used for evaluation.
         X_train, y_train = add_intents_to_training_data(
             X_train,
             y_train,
@@ -445,22 +447,40 @@ def main() -> None:
         variant = "pre_intents"
         training_stage = "Pre-Intents Training"
 
-        training_stage = (
-            "Post-Intents Training" if args.include_intents else "Pre-Intents Training"
+    # Optional debug to validate training examples (currently configured to WAF)
+    logger.debug(
+        "Final training rows by service:\n%s",
+        y_train.value_counts().sort_index().to_string(),
+    )
+
+    if args.include_intents:
+        wafv2_training_examples = intent_X_train.loc[
+            intent_y_train == "wafv2"
+        ]
+
+        logger.debug(
+            "WAF intent examples included in the training split:\n%s",
+            wafv2_training_examples.to_string(index=False),
         )
 
-    intent_matrix_title = f"AWS Service Classifier — Intent Test Set ({training_stage})"
+    intent_matrix_title = (
+        "AWS Service Classifier — Intent Test Set "
+        f"({training_stage})"
+    )
 
     botocore_matrix_title = (
-        f"AWS Service Classifier — Botocore Test Set ({training_stage})"
+        "AWS Service Classifier — Botocore Test Set "
+        f"({training_stage})"
     )
 
     intent_matrix_path = (
-        args.model_output.parent / f"confusion_matrix_intents_{variant}.png"
+        args.model_output.parent
+        / f"confusion_matrix_intents_{variant}.png"
     )
 
     botocore_matrix_path = (
-        args.model_output.parent / f"confusion_matrix_botocore_{variant}.png"
+        args.model_output.parent
+        / f"confusion_matrix_botocore_{variant}.png"
     )
 
     model = train_classifier(

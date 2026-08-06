@@ -503,3 +503,135 @@ glue,connect to databases and object stores through reusable data connections
 glue,find sensitive data patterns while preparing analytical datasets
 glue,manage reusable schemas for streaming data producers and consumers
 glue,author data preparation recipes for analysts without writing full ETL code
+wafv2,block malicious traffic from reaching a web application
+wafv2,protect a website against bots and automated attacks
+wafv2,prevent SQL injection and cross-site scripting attacks
+wafv2,rate limit clients sending too many web requests
+wafv2,add a firewall that inspects HTTP and HTTPS requests
+wafv2,control access to web content based on source IP addresses
+wafv2,filter web requests using URI paths headers and query strings
+wafv2,challenge suspicious visitors with CAPTCHA before allowing access
+wafv2,use managed security rules to block common web exploits
+wafv2,protect API Gateway endpoints from malicious requests
+wafv2,filter harmful traffic reaching an Application Load Balancer
+wafv2,inspect web traffic before CloudFront delivers application content
+wafv2,protect an AppSync GraphQL API from malicious web requests
+wafv2,filter suspicious login traffic reaching a Cognito user pool
+wafv2,protect an App Runner application from hostile HTTP requests
+wafv2,filter malicious requests reaching an Amplify application
+wafv2,inspect web requests passing through an AWS Verified Access instance
+wafv2,return a custom response when a web request is blocked
+wafv2,restrict access to a website based on geographic location
+wafv2,match and block suspicious request values using regular expressions
+wafv2,block malicious scrapers while allowing verified search engine crawlers
+wafv2,detect login attempts that use stolen credentials
+wafv2,stop bots from creating fraudulent accounts through a sign-up page
+wafv2,protect an ECS web application through its Application Load Balancer
+shield,protect an internet-facing application against DDoS attacks
+shield,automatically defend AWS resources against common network floods
+shield,protect an application from large volumetric traffic attacks
+shield,detect and mitigate network and transport layer denial of service attacks
+shield,defend AWS resources against UDP reflection attacks
+shield,prevent TCP SYN floods from overwhelming an application
+shield,add advanced protection against application layer DDoS attacks
+shield,protect a CloudFront distribution against denial of service attacks
+shield,defend Route 53 resources against DDoS attacks
+shield,protect an application using AWS Global Accelerator from traffic floods
+shield,add DDoS protection to an Application Load Balancer
+shield,protect a Network Load Balancer from denial of service attacks
+shield,protect an Elastic IP address attached to an EC2 instance
+shield,keep a customer-facing application available during a large attack
+shield,use managed threat protection for a business-critical application
+shield,get additional DDoS detection mitigation and response capabilities
+shield,get help from AWS security specialists during a serious DDoS event
+shield,gain detailed visibility into attacks targeting protected resources
+shield,automatically mitigate application layer attacks against protected resources
+shield,use application health information to improve DDoS detection
+shield,receive proactive support when an attack affects application availability
+shield,protect against unexpected scaling costs caused by a DDoS attack
+shield,apply advanced DDoS protection across multiple AWS accounts
+shield,maintain application availability without manually responding to traffic floods
+guardduty,continuously detect suspicious activity across an AWS environment
+guardduty,identify connections to known malicious IP addresses and domains
+guardduty,detect the use of compromised or exposed AWS credentials
+guardduty,find unusual API activity that might indicate an account compromise
+guardduty,detect possible data exfiltration from S3 buckets
+guardduty,identify attempts to destroy data stored in S3
+guardduty,detect anomalous login behaviour against RDS databases
+guardduty,identify unauthorized cryptocurrency mining on EC2 instances
+guardduty,detect cryptomining activity inside container workloads
+guardduty,analyse EKS audit logs for suspicious Kubernetes activity
+guardduty,detect runtime threats affecting EKS workloads
+guardduty,monitor ECS Fargate tasks for unauthorized runtime behaviour
+guardduty,detect suspicious operating system and network events on EC2
+guardduty,scan EC2 storage volumes when malware might be present
+guardduty,detect malware in files newly uploaded to S3
+guardduty,check backup resources and recovery points for malware
+guardduty,detect Lambda functions communicating with malicious servers
+guardduty,analyse CloudTrail events VPC flow logs and DNS logs for threats
+guardduty,identify multi-stage attacks spanning several AWS resources
+guardduty,detect threats targeting Bedrock and SageMaker AI workloads
+guardduty,identify anomalous model usage and AI cost harvesting attacks
+guardduty,monitor threats centrally across multiple AWS accounts
+guardduty,generate detailed security findings for potentially compromised resources
+guardduty,send near-real-time threat findings to EventBridge for automated responses
+inspector2,continuously scan EC2 packages for known software vulnerabilities
+inspector2,identify unintended network exposure affecting EC2 instances
+inspector2,scan container images in ECR for vulnerable operating system packages
+inspector2,find vulnerable programming language packages in container images
+inspector2,detect vulnerable dependencies included in Lambda functions
+inspector2,scan custom Lambda application code for security weaknesses
+inspector2,automatically discover workloads that require vulnerability scanning
+inspector2,scan eligible resources without manually scheduling assessments
+inspector2,rescan a workload when installed software packages change
+inspector2,reassess an EC2 instance after a security patch is installed
+inspector2,rescan resources when a newly published CVE affects their software
+inspector2,calculate vulnerability risk using details from the AWS environment
+inspector2,adjust CVSS scores based on whether a vulnerability is exploitable
+inspector2,prioritize the vulnerabilities with the greatest environmental impact
+inspector2,provide remediation guidance for vulnerable workloads
+inspector2,show vulnerability scan coverage across the AWS environment
+inspector2,identify resources and images with the most security findings
+inspector2,manage vulnerability scanning centrally across an AWS organization
+inspector2,automatically activate scanning for new organization accounts
+inspector2,export selected vulnerability findings as CSV or JSON reports
+inspector2,hide unwanted vulnerability findings using suppression rules
+inspector2,automatically close findings after vulnerabilities are remediated
+inspector2,publish vulnerability findings to EventBridge for automated processing
+inspector2,send vulnerability findings to Security Hub for broader analysis
+securityhub,combine findings from GuardDuty Inspector and other security services
+securityhub,get a comprehensive view of security posture across AWS
+securityhub,collect security data from multiple AWS accounts and services
+securityhub,combine AWS security findings with findings from third-party tools
+securityhub,assess resources against AWS Foundational Security Best Practices
+securityhub,check AWS accounts against CIS security controls
+securityhub,evaluate the AWS environment against PCI DSS requirements
+securityhub,assess cloud resources using NIST security standards
+securityhub,run continuous security control checks across AWS resources
+securityhub,identify resources that fail security best-practice checks
+securityhub,use a security score to highlight areas requiring attention
+securityhub,prioritize the most important security findings from multiple sources
+securityhub,normalize findings from different security tools into one format
+securityhub,aggregate security findings across multiple AWS accounts
+securityhub,combine security findings from several AWS Regions
+securityhub,manage organization security through a delegated administrator account
+securityhub,use automation rules to update critical security findings
+securityhub,suppress or update findings automatically based on defined criteria
+securityhub,trigger automated remediation through EventBridge when findings appear
+securityhub,use dashboards to monitor security trends and problem resources
+securityhub,create filtered views for recurring groups of security findings
+securityhub,track compliance status for enabled security standards
+securityhub,centrally manage security controls across an AWS organization
+securityhub,send consolidated security findings to other services and security tools
+wafv2,block automated bots from accessing my website
+wafv2,stop malicious bots sending requests to my web application
+wafv2,filter bot traffic at the application layer
+wafv2,protect a login page from credential stuffing bots
+wafv2,block web scrapers and automated HTTP clients
+wafv2,apply bot control rules to incoming web requests
+shield,protect infrastructure specifically against distributed denial of service attacks
+shield,mitigate a volumetric DDoS traffic flood
+shield,defend network resources against UDP reflection attacks
+shield,protect an application from TCP SYN flood attacks
+shield,maintain availability during a large denial of service attack
+shield,provide network and transport layer DDoS protection
